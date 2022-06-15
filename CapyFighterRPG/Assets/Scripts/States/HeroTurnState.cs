@@ -37,21 +37,15 @@ public class HeroTurnState : PausableState
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            string attackAnimationName =
-                _controller.HeroSlots[_controller.SelectedHeroSlot].AttackAnimationName;
+            //string attackAnimationName =
+            //    _controller.HeroSlots[_controller.SelectedHeroSlot].AttackAnimationName;
 
-            _controller.HeroAnimators[_controller.SelectedHeroSlot].Play(attackAnimationName);
+            //_controller.HeroAnimators[_controller.SelectedHeroSlot].Play(attackAnimationName);
 
-            //Invoke("SwitchToNext", 3);
-            _controller.SwitchState(_controller.EnemyTurn);
-            _turnHasBeenUsed = true;
-            _controller.RefreshSelected();
+            ////Invoke("SwitchToNext", 3);
+            //_controller.SwitchState(_controller.EnemyTurn);
+            //_turnHasBeenUsed = true;
+            //_controller.RefreshSelected();
         }
     }
-
-    //private void SwitchToNext()
-    //{
-    //    _controller.SwitchState(_controller.EnemyTurn);
-    //}
-
 }

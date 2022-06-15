@@ -7,34 +7,28 @@ public class CombatController : StateMachine
 {
     #region Fields
     private Spawner _spawner;
-    private Dictionary<int, GameObject> _spawnedHeros;
-    private Dictionary<int, GameObject> _spawnedEnemies;
-    private Animator[] _heroAnimators;
-    private Animator[] _enemyAnimators;
+    private Dictionary<GameObject, int> _herosToSlots;
+    private Dictionary<GameObject, int> _enemiesToSlots;
+    private Dictionary<GameObject, Unit> _herosToUnits;
+    private Dictionary<GameObject, Unit> _enemiesToUnits;
+    private int _selectedHeroSlot;
+    private int _selectedEnemySlot;
 
-    [SerializeField] private Unit[] _heroSlots;
-    [SerializeField] private Unit[] _enemySlots;
     [SerializeField] private Camera _mainCamera;
-    [SerializeField] private int _selectedHeroSlot;
-    [SerializeField] private int _selectedEnemySlot;
 
     [HideInInspector] public EnemyTurnState EnemyTurn;
     [HideInInspector] public HeroTurnState HeroTurn;
     [HideInInspector] public PauseState Pause;
 
-    //[HideInInspector] public PausableState Pausable;
-
     #endregion
 
     #region Properties
-    public Unit[] HeroSlots => _heroSlots;
-    public Unit[] EnemySlots => _enemySlots;
-    public Dictionary<int, GameObject> SpawnedHeros => _spawnedHeros;
-    public Dictionary<int, GameObject> SpawnedEnemies => _spawnedEnemies;
-    public Animator[] HeroAnimators => _heroAnimators;
-    public Animator[] EnemyAnimators => _enemyAnimators;
-    public int SelectedHeroSlot 
-    { 
+    public Dictionary<GameObject, int> HerosToSlots => _herosToSlots;
+    public Dictionary<GameObject, int> EnemiesToSlots => _enemiesToSlots;
+    public Dictionary<GameObject, Unit> HerosToUnits => _herosToUnits;
+    public Dictionary<GameObject, Unit> EnemiesToUnits => _enemiesToUnits;
+    public int SelectedHeroSlot
+    {
         get => _selectedHeroSlot;
         private set => _selectedHeroSlot = value;
     }
@@ -49,10 +43,10 @@ public class CombatController : StateMachine
     private void Awake()
     {
         _spawner = GetComponent<Spawner>();
-        _spawnedHeros = new Dictionary<int, GameObject>();
-        _spawnedEnemies = new Dictionary<int, GameObject>();
-        _heroAnimators = new Animator[HeroSlots.Length];
-        _enemyAnimators = new Animator[EnemySlots.Length];
+        _herosToSlots = new Dictionary<GameObject, int>();
+        _enemiesToSlots = new Dictionary<GameObject, int>();
+        _herosToUnits = new Dictionary<GameObject, Unit>();
+        _enemiesToUnits = new Dictionary<GameObject, Unit>();
 
         EnemyTurn = new EnemyTurnState(this);
         HeroTurn = new HeroTurnState(this);
@@ -63,27 +57,32 @@ public class CombatController : StateMachine
 
     private void Start()
     {
+        if (!AreUnitArraysCorrect())
+        {
+            throw new InvalidProgramException("Unaccaptable number of slots");
+        }
+
         base.SetUp();
 
         GameObject spawnedObject;
 
-        for (int i = 0; i < _heroSlots.Length; ++i)
+        for (int i = _spawner.HeroSlots.Length - 1; i >= 0 ; --i)
         {
-            if (_heroSlots[i] != null)
+            if (_spawner.HeroSlots[i] != null)
             {
                 spawnedObject = _spawner.SpawnHeroAtSlot(i);
-                SpawnedHeros.Add(i, spawnedObject);
-                _heroAnimators[i] = spawnedObject.GetComponent<Animator>();
+                HerosToSlots.Add(spawnedObject, i);
+                HerosToUnits.Add(spawnedObject, spawnedObject.GetComponent<Unit>()) ;
             }
         }
 
-        for (int i = 0; i < _enemySlots.Length; ++i)
+        for (int i = _spawner.EnemySlots.Length - 1; i >= 0 ; --i)
         {
-            if (_enemySlots[i] != null)
+            if (_spawner.EnemySlots[i] != null)
             {
                 spawnedObject = _spawner.SpawnEnemyAtSlot(i);
-                SpawnedEnemies.Add(i, spawnedObject);
-                _enemyAnimators[i] = spawnedObject.GetComponent<Animator>();
+                EnemiesToSlots.Add(spawnedObject, i);
+                EnemiesToUnits.Add(spawnedObject, spawnedObject.GetComponent<Unit>());
             }
         }
     }
@@ -97,15 +96,22 @@ public class CombatController : StateMachine
     #endregion
 
     #region CustomMethods
-    //But try to avoid using these. Act in terms of slots, not prefabs
+
+    private bool AreUnitArraysCorrect()
+    {
+        return  (_spawner.HeroSlots.Length < _spawner.MaxSlotsInOneColumn || 
+                _spawner.HeroSlots.Length % _spawner.MaxSlotsInOneColumn == 0) &&
+                (_spawner.EnemySlots.Length < _spawner.MaxSlotsInOneColumn ||
+                _spawner.EnemySlots.Length % _spawner.MaxSlotsInOneColumn == 0);
+    }
+
     public int GetHeroSlot(GameObject hero)
     {
-        try
+        if(HerosToSlots.ContainsKey(hero))
         {
-            var foundPair = SpawnedHeros.First(x => x.Value.Equals(hero));
-            return foundPair.Key;
+            return HerosToSlots[hero];
         }
-        catch (InvalidOperationException)
+        else
         {
             throw new InvalidOperationException("Trying to get slot of non-existent hero");
         }
@@ -113,14 +119,13 @@ public class CombatController : StateMachine
 
     public int GetEnemySlot(GameObject enemy)
     {
-        try
+        if (EnemiesToSlots.ContainsKey(enemy))
         {
-            var foundPair = SpawnedEnemies.FirstOrDefault(x => x.Value.Equals(enemy));
-            return foundPair.Key;
+            return EnemiesToSlots[enemy];
         }
-        catch (InvalidOperationException)
+        else
         {
-            throw new InvalidOperationException("Trying to get slot of non-existent hero");
+            throw new InvalidOperationException("Trying to get slot of non-existent enemy");
         }
     }
 
@@ -129,8 +134,6 @@ public class CombatController : StateMachine
         if (Input.GetMouseButtonDown(0))
         {
             SetSelectedUnitsSlots();
-            //if(SelectedHeroSlot != -1)
-            //    _heroAnimators[SelectedHeroSlot].Play(_heroSlots[SelectedHeroSlot].AttackAnimationName);
         }
     }
 
@@ -143,12 +146,12 @@ public class CombatController : StateMachine
             RefreshSelected();
             return;
         }
-        
+
         try
         {
             SelectedHeroSlot = GetHeroSlot(detectedCollider.gameObject);
         }
-        catch(InvalidOperationException)
+        catch (InvalidOperationException)
         {
             SelectedEnemySlot = GetEnemySlot(detectedCollider.gameObject);
         }
@@ -165,7 +168,7 @@ public class CombatController : StateMachine
 
     public void RefreshSelected()
     {
-        SelectedHeroSlot = SelectedEnemySlot = - 1;
+        SelectedHeroSlot = SelectedEnemySlot = -1;
     }
 
     protected override State InitialState()
