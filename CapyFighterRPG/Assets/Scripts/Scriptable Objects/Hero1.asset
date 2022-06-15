@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Hero1
   m_EditorClassIdentifier: 
   Placeholder: {fileID: 4779056793212319318, guid: 259b8a271a7e4f64981e70cefafdaa31, type: 3}
-  damage: 12
+  Damage: 0
+  AttackAnimationName: Hero1_Attack

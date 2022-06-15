@@ -4,5 +4,7 @@ using UnityEngine;
 public class Unit : ScriptableObject
 {
     public GameObject Placeholder;
-    public float damage;
+    public float Damage;
+
+    public string AttackAnimationName;
 }
