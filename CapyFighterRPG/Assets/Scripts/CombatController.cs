@@ -1,18 +1,19 @@
 using System.Collections.Generic;
-using System.Linq;
 using System;
 using UnityEngine;
+using System.Linq;
 
 public class CombatController : StateMachine
 {
     #region Fields
     private Spawner _spawner;
+    private HUD _hud;
     private Dictionary<GameObject, int> _herosToSlots;
     private Dictionary<GameObject, int> _enemiesToSlots;
     private Dictionary<GameObject, Unit> _herosToUnits;
     private Dictionary<GameObject, Unit> _enemiesToUnits;
-    private int _selectedHeroSlot;
-    private int _selectedEnemySlot;
+    [SerializeField] private int _selectedHeroSlot;
+    [SerializeField] private int _selectedEnemySlot;
 
     [SerializeField] private Camera _mainCamera;
 
@@ -37,12 +38,16 @@ public class CombatController : StateMachine
         get => _selectedEnemySlot;
         private set => _selectedEnemySlot = value;
     }
+
+    public int HeroCount => _herosToUnits.Count;
+    public int EnemyCount => _enemiesToUnits.Count;
     #endregion
 
     #region MonoBehaviour Methods
     private void Awake()
     {
         _spawner = GetComponent<Spawner>();
+        _hud = GetComponent<HUD>();
         _herosToSlots = new Dictionary<GameObject, int>();
         _enemiesToSlots = new Dictionary<GameObject, int>();
         _herosToUnits = new Dictionary<GameObject, Unit>();
@@ -63,28 +68,8 @@ public class CombatController : StateMachine
         }
 
         base.SetUp();
-
-        GameObject spawnedObject;
-
-        for (int i = _spawner.HeroSlots.Length - 1; i >= 0 ; --i)
-        {
-            if (_spawner.HeroSlots[i] != null)
-            {
-                spawnedObject = _spawner.SpawnHeroAtSlot(i);
-                HerosToSlots.Add(spawnedObject, i);
-                HerosToUnits.Add(spawnedObject, spawnedObject.GetComponent<Unit>()) ;
-            }
-        }
-
-        for (int i = _spawner.EnemySlots.Length - 1; i >= 0 ; --i)
-        {
-            if (_spawner.EnemySlots[i] != null)
-            {
-                spawnedObject = _spawner.SpawnEnemyAtSlot(i);
-                EnemiesToSlots.Add(spawnedObject, i);
-                EnemiesToUnits.Add(spawnedObject, spawnedObject.GetComponent<Unit>());
-            }
-        }
+        SpawnAllUnits();
+        _hud.PlaceAllUnitInfos();
     }
 
     private void Update()
@@ -99,10 +84,35 @@ public class CombatController : StateMachine
 
     private bool AreUnitArraysCorrect()
     {
-        return  (_spawner.HeroSlots.Length < _spawner.MaxSlotsInOneColumn || 
-                _spawner.HeroSlots.Length % _spawner.MaxSlotsInOneColumn == 0) &&
-                (_spawner.EnemySlots.Length < _spawner.MaxSlotsInOneColumn ||
-                _spawner.EnemySlots.Length % _spawner.MaxSlotsInOneColumn == 0);
+        return  (_spawner.HeroSlots.Length < _spawner.MaxEnemyRowCount || 
+                _spawner.HeroSlots.Length % _spawner.MaxEnemyRowCount == 0) &&
+                (_spawner.EnemySlots.Length < _spawner.MaxEnemyRowCount ||
+                _spawner.EnemySlots.Length % _spawner.MaxEnemyRowCount == 0);
+    }
+
+    private void SpawnAllUnits()
+    {
+        GameObject spawnedObject;
+
+        for (int i = _spawner.HeroSlots.Length - 1; i >= 0; --i)
+        {
+            if (_spawner.HeroSlots[i] != null)
+            {
+                spawnedObject = _spawner.SpawnHeroAtSlot(i);
+                HerosToSlots.Add(spawnedObject, i);
+                HerosToUnits.Add(spawnedObject, spawnedObject.GetComponent<Unit>());
+            }
+        }
+
+        for (int i = _spawner.EnemySlots.Length - 1; i >= 0; --i)
+        {
+            if (_spawner.EnemySlots[i] != null)
+            {
+                spawnedObject = _spawner.SpawnEnemyAtSlot(i);
+                EnemiesToSlots.Add(spawnedObject, i);
+                EnemiesToUnits.Add(spawnedObject, spawnedObject.GetComponent<Unit>());
+            }
+        }
     }
 
     public int GetHeroSlot(GameObject hero)
@@ -129,6 +139,18 @@ public class CombatController : StateMachine
         }
     }
 
+    public GameObject GetHeroAtSlot(int slot)
+    {
+        GameObject res = HerosToSlots.FirstOrDefault(hero => hero.Value == slot).Key;
+        return res ?? throw new InvalidOperationException("The slot is empty");
+    }
+
+    public GameObject GetEnemyAtSlot(int slot)
+    {
+        GameObject res = EnemiesToSlots.FirstOrDefault(hero => hero.Value == slot).Key;
+        return res ?? throw new InvalidOperationException("The slot is empty");
+    }
+
     private void OnMouseClicked()
     {
         if (Input.GetMouseButtonDown(0))
@@ -143,7 +165,7 @@ public class CombatController : StateMachine
 
         if (detectedCollider == null)
         {
-            RefreshSelected();
+            RefreshSelectedSlots();
             return;
         }
 
@@ -166,9 +188,14 @@ public class CombatController : StateMachine
         return Physics2D.OverlapBox(mouseWorldPosition, new Vector2(0.2f, 0.2f), 0);
     }
 
-    public void RefreshSelected()
+    public void RefreshSelectedSlots()
     {
         SelectedHeroSlot = SelectedEnemySlot = -1;
+    }
+
+    public bool AreSlotsSelected()
+    {
+        return SelectedHeroSlot + SelectedEnemySlot != -2;
     }
 
     protected override State InitialState()

@@ -28,24 +28,24 @@ public class HeroTurnState : PausableState
     {
         base.UpdateLogic();
 
-        if (_controller.SelectedHeroSlot == -1  ||
-            _controller.SelectedEnemySlot == -1 ||
-            _turnHasBeenUsed)
+        if (!_controller.AreSlotsSelected() || _turnHasBeenUsed)
         {
             return;
         }
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            //string attackAnimationName =
-            //    _controller.HeroSlots[_controller.SelectedHeroSlot].AttackAnimationName;
+            GameObject attacker = _controller.GetHeroAtSlot(_controller.SelectedHeroSlot);
+            GameObject victim = _controller.GetEnemyAtSlot(_controller.SelectedEnemySlot);
+            Unit attackingUnit = _controller.HerosToUnits[attacker];
+            Unit victimUnit = _controller.EnemiesToUnits[victim];
 
-            //_controller.HeroAnimators[_controller.SelectedHeroSlot].Play(attackAnimationName);
+            attackingUnit.Fighter.Attack(victimUnit);
 
-            ////Invoke("SwitchToNext", 3);
-            //_controller.SwitchState(_controller.EnemyTurn);
-            //_turnHasBeenUsed = true;
-            //_controller.RefreshSelected();
+
+            _controller.SwitchState(_controller.EnemyTurn);
+            _turnHasBeenUsed = true;
+            _controller.RefreshSelectedSlots();
         }
     }
 }

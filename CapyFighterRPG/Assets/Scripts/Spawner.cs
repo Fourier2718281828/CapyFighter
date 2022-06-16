@@ -3,19 +3,26 @@ using System;
 
 public class Spawner : MonoBehaviour
 {
-    //private Controller _combatController;
-
-    [SerializeField] private GameObject DEBUG_POINT;
-
     [SerializeField] private GameObject _unitPrefab;
-    //[SerializeField] private float _margin;
-    [SerializeField] private int _maxSlotsInOneColumn;
 
-    [Header("Boundary Points For the Field of Slots :")]
-    [SerializeField] private Vector3 _leftLowBoundPoint;
-    [SerializeField] private Vector3 _leftUpBoundPoint;
-    [SerializeField] private Vector3 _rightUpBoundPoint;
-    [SerializeField] private Vector3 _rightLowBoundPoint;
+    [Header("GameObject to store all units in")]
+    [SerializeField] private GameObject _unitContainer;
+
+    [Header("Slot Count Boundaries")]
+    [Tooltip("Max number of hero slots in one column")]
+    [SerializeField] private int _maxHeroRowCount;
+    [Tooltip("Max number of enemy slots in one column")]
+    [SerializeField] private int _maxEnemyRowCount;
+
+    [Header("Boundary Points For the Field of Hero Slots :")]
+    [SerializeField] private Vector3 _heroOrigin;
+    [SerializeField] private Vector3 _heroOriginsNeighbour;
+    [SerializeField] private Vector3 _heroDiagonalToOrigin;
+
+    [Header("Boundary Points For the Field of Enemy Slots :")]
+    [SerializeField] private Vector3 _enemyOrigin;
+    [SerializeField] private Vector3 _enemyOriginsNeighbour;
+    [SerializeField] private Vector3 _enemyDiagonalToOrigin;
 
     [Header("Heros at slots (not all slots have to be filled)")]
     [SerializeField] private UnitData[] _heroSlots;
@@ -26,7 +33,8 @@ public class Spawner : MonoBehaviour
     private Vector3[] _heroSlotPositions;
     private Vector3[] _enemySlotPositions;
 
-    public int MaxSlotsInOneColumn => _maxSlotsInOneColumn;
+    public int MaxHeroRowCount => _maxHeroRowCount;
+    public int MaxEnemyRowCount => _maxEnemyRowCount;
     public UnitData[] HeroSlots => _heroSlots;
     public UnitData[] EnemySlots => _enemySlots;
 
@@ -42,79 +50,77 @@ public class Spawner : MonoBehaviour
         if (HeroSlots[slot] == null)
             throw new InvalidOperationException($"Trying to instantiate a hero at an empty slot : {slot}");
 
-        _unitPrefab.transform.position = _heroSlotPositions[slot];
-        _unitPrefab.GetComponent<Unit>().Init(HeroSlots[slot]);
-        _unitPrefab.GetComponent<SpriteRenderer>().flipX = false;
+        GameObject spawned = 
+            Instantiate(_unitPrefab, _heroSlotPositions[slot], Quaternion.identity, _unitContainer.transform);
 
-        return Instantiate(_unitPrefab);
+        spawned.GetComponent<Unit>().Init(HeroSlots[slot]);
+        spawned.GetComponent<SpriteRenderer>().flipX = false;
+
+        return spawned;
     }
 
     public GameObject SpawnEnemyAtSlot(int slot)
     {
         if (slot >= EnemySlots.Length)
             throw new IndexOutOfRangeException($"{slot}");
-        if (HeroSlots[slot] == null)
+        if (EnemySlots[slot] == null)
             throw new InvalidOperationException($"Trying to instantiate an enemy at an empty slot : {slot}");
 
-        _unitPrefab.transform.position = _enemySlotPositions[slot];
-        _unitPrefab.GetComponent<Unit>().Init(EnemySlots[slot]);
-        _unitPrefab.GetComponent<SpriteRenderer>().flipX = true;
+        GameObject spawned =
+            Instantiate(_unitPrefab, _enemySlotPositions[slot], Quaternion.identity, _unitContainer.transform);
 
-        return Instantiate(_unitPrefab);
+        spawned.GetComponent<Unit>().Init(EnemySlots[slot]);
+        spawned.GetComponent<SpriteRenderer>().flipX = true;
+
+        return spawned;
     }
 
     private void EvaluateSlotPositions()
     {
-        _heroSlotPositions = CalculateSlotCentresGrid
-                        (3, 2, _leftLowBoundPoint, _leftUpBoundPoint,
-                         _rightUpBoundPoint, _rightLowBoundPoint);
+        VectorGrid grid;
 
-        var enemy_leftLowBoundPoint = _leftLowBoundPoint;
-        var enemy_leftUpBoundPoint = _leftUpBoundPoint;
-        var enemy_rightUpBoundPoint = _rightUpBoundPoint;
-        var enemy_rightLowBoundPoint = _rightLowBoundPoint;
-        enemy_leftLowBoundPoint.Scale(new Vector3(-1,1,1));
-        enemy_leftUpBoundPoint.Scale(new Vector3(-1,1,1));
-        enemy_rightUpBoundPoint.Scale(new Vector3(-1,1,1));
-        enemy_rightLowBoundPoint.Scale(new Vector3(-1, 1, 1));
+        grid = new VectorGrid
+            (
+            _heroOrigin,
+            _heroOriginsNeighbour,
+            _heroDiagonalToOrigin,
+            GetSlotRowsCount(HeroSlots.Length, MaxHeroRowCount),
+            GetSlotColsCount(HeroSlots.Length, MaxHeroRowCount)
+            );
 
-        _enemySlotPositions = CalculateSlotCentresGrid
-                        (3, 2, enemy_leftLowBoundPoint, enemy_leftUpBoundPoint,
-                         enemy_rightUpBoundPoint, enemy_rightLowBoundPoint);
+        _heroSlotPositions = grid.CalculateCellCentres();
+
+        grid = new VectorGrid
+            (
+            _enemyOrigin,
+            _enemyOriginsNeighbour,
+            _enemyDiagonalToOrigin,
+            GetSlotRowsCount(EnemySlots.Length, MaxEnemyRowCount),
+            GetSlotColsCount(EnemySlots.Length, MaxEnemyRowCount)
+            );
+
+        _enemySlotPositions = grid.CalculateCellCentres();
+
     }
 
-    private Vector3[] CalculateSlotCentresGrid(int cols, int rows, 
-            Vector3 leftDown, Vector3 leftUp, Vector3 rightUp, Vector3 rightDown)
+    private int GetSlotRowsCount(int totalSlotCount, int maxRowCount)
     {
-        //d - diagonal vector of the paralelogram
-        //d = d_e1 + d_e2
-        //d_e1 = m*e1  =>  e1 = d_e1 / 2m
-        //d_e2 = n*e2  =>  e2 = d_e2 / 2n
-        //rightDown + (e1 + e2)
-
-        var e1 = (leftDown - rightDown) / (2 * rows);
-        var e2 = (rightUp - rightDown) / (2 * cols);
-        var o = rightDown + (e1 + e2);
-
-        var result = new Vector3[rows * cols];
-
-        for(int i = 0; i < rows; ++i)
-            for(int j = 0; j < cols; ++j)
-            {
-                result[i * cols + j] = o + 2*i*e1 + 2*j*e2;
-                DRAW_DEBUG(result[i * cols + j]);
-            }
-
-        return result;
+        if (totalSlotCount < maxRowCount)
+            return totalSlotCount;
+        else
+            return maxRowCount;
     }
-
-    private int GetSlotRowsNumber() => 0;
-    private int GetSlotColsNumber() => 0;
-
-
-    private void DRAW_DEBUG(Vector3 position)
+    private int GetSlotColsCount(int totalSlotCount, int maxRowCount)
     {
-        DEBUG_POINT.transform.position = position;
-        Instantiate(DEBUG_POINT);
+        if (totalSlotCount < maxRowCount)
+            return 1;
+        else
+        {
+            if (totalSlotCount % maxRowCount != 0)
+                throw new InvalidOperationException
+                    ("Max number of rows must devide the total number of slots provided " +
+                    "at least one column is filled.");
+            return totalSlotCount / maxRowCount;
+        }
     }
 }
