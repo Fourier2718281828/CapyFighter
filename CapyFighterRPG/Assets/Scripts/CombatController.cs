@@ -10,8 +10,8 @@ public class CombatController : StateMachine
     private HUD _hud;
     private Dictionary<GameObject, int> _herosToSlots;
     private Dictionary<GameObject, int> _enemiesToSlots;
-    private Dictionary<GameObject, Unit> _herosToUnits;
-    private Dictionary<GameObject, Unit> _enemiesToUnits;
+    private Dictionary<GameObject, Fighter> _herosToFighters;
+    private Dictionary<GameObject, Fighter> _enemiesToFighters;
     [SerializeField] private int _selectedHeroSlot;
     [SerializeField] private int _selectedEnemySlot;
 
@@ -26,8 +26,8 @@ public class CombatController : StateMachine
     #region Properties
     public Dictionary<GameObject, int> HerosToSlots => _herosToSlots;
     public Dictionary<GameObject, int> EnemiesToSlots => _enemiesToSlots;
-    public Dictionary<GameObject, Unit> HerosToUnits => _herosToUnits;
-    public Dictionary<GameObject, Unit> EnemiesToUnits => _enemiesToUnits;
+    public Dictionary<GameObject, Fighter> HerosToFighters => _herosToFighters;
+    public Dictionary<GameObject, Fighter> EnemiesToFighters => _enemiesToFighters;
     public int SelectedHeroSlot
     {
         get => _selectedHeroSlot;
@@ -39,8 +39,8 @@ public class CombatController : StateMachine
         private set => _selectedEnemySlot = value;
     }
 
-    public int HeroCount => _herosToUnits.Count;
-    public int EnemyCount => _enemiesToUnits.Count;
+    public int HeroCount => _herosToFighters.Count;
+    public int EnemyCount => _enemiesToFighters.Count;
     #endregion
 
     #region MonoBehaviour Methods
@@ -50,8 +50,8 @@ public class CombatController : StateMachine
         _hud = GetComponent<HUD>();
         _herosToSlots = new Dictionary<GameObject, int>();
         _enemiesToSlots = new Dictionary<GameObject, int>();
-        _herosToUnits = new Dictionary<GameObject, Unit>();
-        _enemiesToUnits = new Dictionary<GameObject, Unit>();
+        _herosToFighters = new Dictionary<GameObject, Fighter>();
+        _enemiesToFighters = new Dictionary<GameObject, Fighter>();
 
         EnemyTurn = new EnemyTurnState(this);
         HeroTurn = new HeroTurnState(this);
@@ -75,7 +75,11 @@ public class CombatController : StateMachine
     private void Update()
     {
         base.UpdateLogic();
-        OnMouseClicked();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            SetSelectedUnitsSlots();
+        }
     }
 
     #endregion
@@ -100,7 +104,7 @@ public class CombatController : StateMachine
             {
                 spawnedObject = _spawner.SpawnHeroAtSlot(i);
                 HerosToSlots.Add(spawnedObject, i);
-                HerosToUnits.Add(spawnedObject, spawnedObject.GetComponent<Unit>());
+                HerosToFighters.Add(spawnedObject, spawnedObject.GetComponent<Fighter>());
             }
         }
 
@@ -110,7 +114,7 @@ public class CombatController : StateMachine
             {
                 spawnedObject = _spawner.SpawnEnemyAtSlot(i);
                 EnemiesToSlots.Add(spawnedObject, i);
-                EnemiesToUnits.Add(spawnedObject, spawnedObject.GetComponent<Unit>());
+                EnemiesToFighters.Add(spawnedObject, spawnedObject.GetComponent<Fighter>());
             }
         }
     }
@@ -147,17 +151,13 @@ public class CombatController : StateMachine
 
     public GameObject GetEnemyAtSlot(int slot)
     {
-        GameObject res = EnemiesToSlots.FirstOrDefault(hero => hero.Value == slot).Key;
+        GameObject res = EnemiesToSlots.FirstOrDefault(enemy => enemy.Value == slot).Key;
         return res ?? throw new InvalidOperationException("The slot is empty");
     }
 
-    private void OnMouseClicked()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            SetSelectedUnitsSlots();
-        }
-    }
+    public Fighter GetHeroFighterAtSlot(int slot) => HerosToFighters[GetHeroAtSlot(slot)];
+
+    public Fighter GetEnemyFighterAtSlot(int slot) => EnemiesToFighters[GetEnemyAtSlot(slot)];
 
     private void SetSelectedUnitsSlots()
     {
@@ -198,9 +198,6 @@ public class CombatController : StateMachine
         return SelectedHeroSlot + SelectedEnemySlot != -2;
     }
 
-    protected override State InitialState()
-    {
-        return HeroTurn;
-    }
+    protected override State InitialState() => HeroTurn;
     #endregion
 }

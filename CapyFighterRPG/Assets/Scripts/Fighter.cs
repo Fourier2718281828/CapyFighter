@@ -1,32 +1,31 @@
 using UnityEngine;
+using System;
 
 public class Fighter : MonoBehaviour
 {
     private Unit _unit;
-    private UnitInfo _unitInfo;
-    //private CombatController _combatController;
+    //private UnitInfo _unitInfo;
+
+    #region Events
+    public event Action<float> OnDamageReceived;
+    public event Action<float> OnAttacked;
+    #endregion
 
     private void Awake()
     {
         _unit = GetComponent<Unit>();
-        //_combatController = combatController.GetComponent<CombatController>();
-    }
-
-    private void Start()
-    {
-        GameObject combatController = GameObject.FindGameObjectWithTag("CombatController");
-        HUD hud = combatController.GetComponent<HUD>();
-        _unitInfo = hud.UnitInfos[_unit];
     }
 
     public void ReceiveDamage(float damage)
     {
-        _unitInfo.SetHP(0.5f);
+        const float healthPercentage = 0.25f;
+        OnDamageReceived?.Invoke(healthPercentage);
     }
 
-    public void Attack(Unit victim)
+    public void Attack(Fighter victim)
     {
-        _unitInfo.SetMP(0.5f);
-        victim.Fighter.ReceiveDamage(_unit.Damage);
+        const float manaPercentage = 0.5f;
+        OnAttacked?.Invoke(manaPercentage);
+        victim.ReceiveDamage(_unit.Damage);
     }
 }

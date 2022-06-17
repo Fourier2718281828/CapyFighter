@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class HUD : MonoBehaviour
 {
@@ -16,20 +17,30 @@ public class HUD : MonoBehaviour
     [SerializeField] private Vector3 _enemyDiagonalToOrigin;
 
     private CombatController _controller;
-    private Dictionary<Unit, UnitInfo> _unitInfos;
+    private Dictionary<Fighter, UnitInfo> _fightersToUnitInfos;
 
     #endregion
 
     #region Properties
-    public Dictionary<Unit, UnitInfo> UnitInfos => _unitInfos;
+    public Dictionary<Fighter, UnitInfo> FightersToUnitInfos => _fightersToUnitInfos;
     #endregion
 
     #region MonoBehaviour methods
     private void Awake()
     {
         _controller = GetComponent<CombatController>();
-        _unitInfos = new Dictionary<Unit, UnitInfo>();
+        _fightersToUnitInfos = new Dictionary<Fighter, UnitInfo>();
     }
+
+    private void SubscribeEvents()
+    {
+        foreach(var pair in FightersToUnitInfos)
+        {
+            pair.Key.OnDamageReceived += percentage => pair.Value.SetHP(percentage);
+            //... for other attacks
+        }
+    }
+
     #endregion
 
     #region Custom Methods
@@ -41,23 +52,25 @@ public class HUD : MonoBehaviour
 
         positions = CalculateHeroInfosPositions();
 
-        foreach (var unit in _controller.HerosToUnits)
+        foreach (var unit in _controller.HerosToFighters)
         {
             unitInfoObject = Instantiate(_unitInfoPrefab, positions[_controller.GetHeroSlot(unit.Key)], 
                                         Quaternion.identity, _hudCanvas.transform);
             script = unitInfoObject.GetComponent<UnitInfo>();
-            _unitInfos.Add(unit.Value, script);
+            _fightersToUnitInfos.Add(unit.Value, script);
         }
 
         positions = CalculateEnemyInfosPositions();
 
-        foreach (var unit in _controller.EnemiesToUnits)
+        foreach (var unit in _controller.EnemiesToFighters)
         {
             unitInfoObject = Instantiate(_unitInfoPrefab, positions[_controller.GetEnemySlot(unit.Key)],
                                         Quaternion.identity, _hudCanvas.transform);
             script = unitInfoObject.GetComponent<UnitInfo>();
-            _unitInfos.Add(unit.Value, script);
+            _fightersToUnitInfos.Add(unit.Value, script);
         }
+
+        SubscribeEvents();
     }
 
     private Vector3[] CalculateHeroInfosPositions()

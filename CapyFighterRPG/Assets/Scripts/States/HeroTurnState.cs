@@ -35,12 +35,10 @@ public class HeroTurnState : PausableState
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            GameObject attacker = _controller.GetHeroAtSlot(_controller.SelectedHeroSlot);
-            GameObject victim = _controller.GetEnemyAtSlot(_controller.SelectedEnemySlot);
-            Unit attackingUnit = _controller.HerosToUnits[attacker];
-            Unit victimUnit = _controller.EnemiesToUnits[victim];
+            Fighter attackingFighter = _controller.GetHeroFighterAtSlot(_controller.SelectedHeroSlot);
+            Fighter victimFighter = _controller.GetEnemyFighterAtSlot(_controller.SelectedEnemySlot);
 
-            attackingUnit.Fighter.Attack(victimUnit);
+            attackingFighter.Attack(victimFighter);
 
 
             _controller.SwitchState(_controller.EnemyTurn);
