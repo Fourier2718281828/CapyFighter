@@ -1,17 +1,25 @@
 using UnityEngine;
 
-public abstract class PausableState : State
+public class PausableState : State
 {
-    public PausableState(StateMachine stateMachine) 
-        : base(stateMachine) {}
+    private readonly CombatController _controller;
+    private readonly PauseShower _pauseShower;
 
+    public PausableState(CombatController stateMachine) 
+        : base(stateMachine) 
+    {
+        _controller = stateMachine;
+        _pauseShower = _controller.GetComponent<PauseShower>();
+    }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            _stateMachine.SwitchState(((CombatController)_stateMachine).Pause);
+            _pauseShower.ShowPause();
+            _controller.PauseCombat();
+            _stateMachine.SwitchState(_controller.PauseState);
         }
     }
 }

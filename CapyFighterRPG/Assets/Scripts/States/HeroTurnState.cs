@@ -3,7 +3,6 @@
 public class HeroTurnState : PausableState
 {
     private readonly CombatController _controller;
-    private bool _turnHasBeenUsed;
 
     public HeroTurnState(CombatController stateMachine)
         : base(stateMachine)
@@ -15,7 +14,6 @@ public class HeroTurnState : PausableState
     {
         base.EnterState();
         Debug.Log("HeroTurn entered");
-        _turnHasBeenUsed = false;
     }
 
     public override void ExitState()
@@ -28,7 +26,7 @@ public class HeroTurnState : PausableState
     {
         base.UpdateLogic();
 
-        if (!_controller.AreSlotsSelected() || _turnHasBeenUsed)
+        if (!_controller.AreSlotsSelected())
         {
             return;
         }
@@ -37,12 +35,16 @@ public class HeroTurnState : PausableState
         {
             Fighter attackingFighter = _controller.GetHeroFighterAtSlot(_controller.SelectedHeroSlot);
             Fighter victimFighter = _controller.GetEnemyFighterAtSlot(_controller.SelectedEnemySlot);
-
             attackingFighter.Attack(victimFighter);
-
-
-            _controller.SwitchState(_controller.EnemyTurn);
-            _turnHasBeenUsed = true;
+            _controller.SwitchStateInSeconds(_controller.EnemyTurnState, 2f);
+            _controller.RefreshSelectedSlots();
+        }
+        if(Input.GetKey(KeyCode.S))
+        {
+            Fighter attackingFighter = _controller.GetHeroFighterAtSlot(_controller.SelectedHeroSlot);
+            Fighter victimFighter = _controller.GetEnemyFighterAtSlot(_controller.SelectedEnemySlot);
+            attackingFighter.SuperAttack(victimFighter);
+            _controller.SwitchStateInSeconds(_controller.EnemyTurnState, 2f);
             _controller.RefreshSelectedSlots();
         }
     }

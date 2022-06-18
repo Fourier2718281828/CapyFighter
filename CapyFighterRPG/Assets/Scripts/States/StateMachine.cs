@@ -1,13 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 public abstract class StateMachine : MonoBehaviour
 {
-    public State CurrentState { get; private set; }
+    public State CurrentState   { get; private set; }
+    public State PreviousState  { get; private set; }
+
 
     protected void SetUp()
     {
         CurrentState = InitialState();
         CurrentState?.EnterState();
+        PreviousState = null;
     }
 
     protected void UpdateLogic()
@@ -19,7 +23,26 @@ public abstract class StateMachine : MonoBehaviour
 
     public void SwitchState(State newState)
     {
+        Debug.Log("State changed");
+
+        PreviousState = CurrentState;
         CurrentState.ExitState();
+        CurrentState = newState;
+        CurrentState.EnterState();
+    }
+
+    public void SwitchToPreviousState() => SwitchState(PreviousState);
+
+    public void SwitchStateInSeconds(State newState, float seconds)
+    {
+        StartCoroutine(SwitchStateCoroutine(newState, seconds));
+    }
+
+    private IEnumerator SwitchStateCoroutine(State newState, float seconds)
+    {
+        CurrentState.ExitState();
+        CurrentState.ExitState();
+        yield return new WaitForSeconds(seconds);
         CurrentState = newState;
         CurrentState.EnterState();
     }

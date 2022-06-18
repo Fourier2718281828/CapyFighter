@@ -17,9 +17,10 @@ public class CombatController : StateMachine
 
     [SerializeField] private Camera _mainCamera;
 
-    [HideInInspector] public EnemyTurnState EnemyTurn;
-    [HideInInspector] public HeroTurnState HeroTurn;
-    [HideInInspector] public PauseState Pause;
+    [HideInInspector] public EnemyTurnState EnemyTurnState;
+    [HideInInspector] public HeroTurnState HeroTurnState;
+    [HideInInspector] public PauseState PauseState;
+    [HideInInspector] public PausableState PausableState;
 
     #endregion
 
@@ -28,11 +29,13 @@ public class CombatController : StateMachine
     public Dictionary<GameObject, int> EnemiesToSlots => _enemiesToSlots;
     public Dictionary<GameObject, Fighter> HerosToFighters => _herosToFighters;
     public Dictionary<GameObject, Fighter> EnemiesToFighters => _enemiesToFighters;
+
     public int SelectedHeroSlot
     {
         get => _selectedHeroSlot;
         private set => _selectedHeroSlot = value;
     }
+
     public int SelectedEnemySlot
     {
         get => _selectedEnemySlot;
@@ -53,9 +56,9 @@ public class CombatController : StateMachine
         _herosToFighters = new Dictionary<GameObject, Fighter>();
         _enemiesToFighters = new Dictionary<GameObject, Fighter>();
 
-        EnemyTurn = new EnemyTurnState(this);
-        HeroTurn = new HeroTurnState(this);
-        Pause = new PauseState(this);
+        EnemyTurnState = new EnemyTurnState(this);
+        HeroTurnState = new HeroTurnState(this);
+        PauseState = new PauseState(this);
 
         SelectedHeroSlot = SelectedEnemySlot = -1;
     }
@@ -70,6 +73,7 @@ public class CombatController : StateMachine
         base.SetUp();
         SpawnAllUnits();
         _hud.PlaceAllUnitInfos();
+        AssignEventsToFighters();
     }
 
     private void Update()
@@ -119,6 +123,66 @@ public class CombatController : StateMachine
         }
     }
 
+    private void AssignEventsToFighters()
+    {
+        foreach (var pair in HerosToFighters)
+        {
+            pair.Value.OnDied += () =>
+            {
+                SelectedHeroSlot = -1;
+                _hud.FightersToUnitInfos.Remove(pair.Value);
+                HerosToSlots.Remove(pair.Key);
+                HerosToFighters.Remove(pair.Key);
+                Destroy(pair.Key);
+            };
+        }
+
+        foreach (var pair in EnemiesToFighters)
+        {
+            pair.Value.OnDied += () =>
+            {
+                SelectedHeroSlot = -1;
+                _hud.FightersToUnitInfos.Remove(pair.Value);
+                EnemiesToSlots.Remove(pair.Key);
+                EnemiesToFighters.Remove(pair.Key);
+                Destroy(pair.Key);
+            };
+        }
+    }
+
+
+    private void SetSelectedUnitsSlots()
+    {
+        if (!CurrentState.Equals(HeroTurnState))
+            return;
+
+        Collider2D detectedCollider = GetColliderIntersectingMouse();
+
+        if (detectedCollider == null)
+        {
+            RefreshSelectedSlots();
+            return;
+        }
+
+        try
+        {
+            SelectedHeroSlot = GetHeroSlot(detectedCollider.gameObject);
+        }
+        catch (InvalidOperationException)
+        {
+            SelectedEnemySlot = GetEnemySlot(detectedCollider.gameObject);
+        }
+    }
+
+    private Collider2D GetColliderIntersectingMouse()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = _mainCamera.nearClipPlane;
+        Vector2 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(mousePosition);
+
+        return Physics2D.OverlapBox(mouseWorldPosition, new Vector2(0.2f, 0.2f), 0);
+    }
+
     public int GetHeroSlot(GameObject hero)
     {
         if(HerosToSlots.ContainsKey(hero))
@@ -159,35 +223,6 @@ public class CombatController : StateMachine
 
     public Fighter GetEnemyFighterAtSlot(int slot) => EnemiesToFighters[GetEnemyAtSlot(slot)];
 
-    private void SetSelectedUnitsSlots()
-    {
-        Collider2D detectedCollider = GetColliderIntersectingMouse();
-
-        if (detectedCollider == null)
-        {
-            RefreshSelectedSlots();
-            return;
-        }
-
-        try
-        {
-            SelectedHeroSlot = GetHeroSlot(detectedCollider.gameObject);
-        }
-        catch (InvalidOperationException)
-        {
-            SelectedEnemySlot = GetEnemySlot(detectedCollider.gameObject);
-        }
-    }
-
-    private Collider2D GetColliderIntersectingMouse()
-    {
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = _mainCamera.nearClipPlane;
-        Vector2 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(mousePosition);
-
-        return Physics2D.OverlapBox(mouseWorldPosition, new Vector2(0.2f, 0.2f), 0);
-    }
-
     public void RefreshSelectedSlots()
     {
         SelectedHeroSlot = SelectedEnemySlot = -1;
@@ -195,9 +230,13 @@ public class CombatController : StateMachine
 
     public bool AreSlotsSelected()
     {
-        return SelectedHeroSlot + SelectedEnemySlot != -2;
+        return SelectedHeroSlot != -1 && SelectedEnemySlot != -1;
     }
 
-    protected override State InitialState() => HeroTurn;
+    public void PauseCombat() => Time.timeScale = 0f;
+    
+    public void UnpauseCombat() => Time.timeScale = 1f;
+
+    protected override State InitialState() => HeroTurnState;
     #endregion
 }

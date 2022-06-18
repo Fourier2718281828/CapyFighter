@@ -36,8 +36,18 @@ public class HUD : MonoBehaviour
     {
         foreach(var pair in FightersToUnitInfos)
         {
-            pair.Key.OnDamageReceived += percentage => pair.Value.SetHP(percentage);
-            //... for other attacks
+            pair.Key.OnDamageReceived   += percentage => pair.Value.SetHP(percentage);
+            pair.Key.OnAttacked         += percentage => pair.Value.SetMP(percentage);
+            pair.Key.OnSuperAttacked    += percentage => pair.Value.SetMP(percentage);
+            //... for other hero attacks
+        }
+
+        foreach (var pair in FightersToUnitInfos)
+        {
+            pair.Key.OnDamageReceived   += percentage => pair.Value.SetHP(percentage);
+            pair.Key.OnAttacked         += percentage => pair.Value.SetMP(percentage);
+            pair.Key.OnSuperAttacked    += percentage => pair.Value.SetMP(percentage);
+            //... for other enemy attacks
         }
     }
 
@@ -49,22 +59,25 @@ public class HUD : MonoBehaviour
         Vector3[] positions;
         GameObject unitInfoObject;
         UnitInfo script;
+        int i;
 
         positions = CalculateHeroInfosPositions();
+        i = 0;
 
         foreach (var unit in _controller.HerosToFighters)
         {
-            unitInfoObject = Instantiate(_unitInfoPrefab, positions[_controller.GetHeroSlot(unit.Key)], 
+            unitInfoObject = Instantiate(_unitInfoPrefab, positions[i++], 
                                         Quaternion.identity, _hudCanvas.transform);
             script = unitInfoObject.GetComponent<UnitInfo>();
             _fightersToUnitInfos.Add(unit.Value, script);
         }
 
         positions = CalculateEnemyInfosPositions();
+        i = 0;
 
         foreach (var unit in _controller.EnemiesToFighters)
         {
-            unitInfoObject = Instantiate(_unitInfoPrefab, positions[_controller.GetEnemySlot(unit.Key)],
+            unitInfoObject = Instantiate(_unitInfoPrefab, positions[i++],
                                         Quaternion.identity, _hudCanvas.transform);
             script = unitInfoObject.GetComponent<UnitInfo>();
             _fightersToUnitInfos.Add(unit.Value, script);

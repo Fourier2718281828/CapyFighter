@@ -12,5 +12,4 @@ public class State
     public virtual void UpdateLogic()   {}
 
     public virtual void ExitState()     {}
-
 }
