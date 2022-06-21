@@ -34,12 +34,12 @@ public class Unit : MonoBehaviour
 
     #region Properties
     public Sprite AvatarIcon => _data.AvatarIcon;
-    public float MaxHP => _data.MaxHP;
-    public float MaxMP => _data.MaxMP;
-    public float AttackDamage => _data.AttackDamage;
-    public float AttackMana => _data.AttackMana;
-    public float SuperAttackDamage => _data.SuperAttackDamage;
-    public float SuperAttackMana => _data.SuperAttackMana;
+    public int MaxHP => _data.MaxHP;
+    public int MaxMP => _data.MaxMP;
+    public int AttackDamage => _data.AttackDamage;
+    public int AttackMana => _data.AttackMana;
+    public int SuperAttackDamage => _data.SuperAttackDamage;
+    public int SuperAttackMana => _data.SuperAttackMana;
     #endregion
 
     #region Component Properties

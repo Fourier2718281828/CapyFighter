@@ -224,6 +224,30 @@ public class CombatController : StateMachine
 
     public Fighter GetEnemyFighterAtSlot(int slot) => EnemiesToFighters[GetEnemyAtSlot(slot)];
 
+    public GameObject GetHeroByFighter(Fighter fighter)
+    {
+        GameObject res = HerosToFighters.FirstOrDefault(hero => hero.Value == fighter).Key;
+        return res ?? throw new InvalidOperationException("No hero containing the fighter.");
+    }
+
+    public GameObject GetEnemyByFighter(Fighter fighter)
+    {
+        GameObject res = EnemiesToFighters.FirstOrDefault(enemy => enemy.Value == fighter).Key;
+        return res ?? throw new InvalidOperationException("No enemy containing the fighter.");
+    }
+
+    public int GetUnitSlotByFighter(Fighter fighter)
+    {
+        try
+        {
+            return HerosToSlots[GetHeroByFighter(fighter)];
+        }
+        catch (InvalidOperationException)
+        {
+            return EnemiesToSlots[GetEnemyByFighter(fighter)];
+        }
+    }
+
     public void RefreshSelectedSlots()
     {
         SelectedHeroSlot = SelectedEnemySlot = -1;

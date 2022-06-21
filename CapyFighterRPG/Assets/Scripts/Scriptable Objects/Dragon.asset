@@ -17,6 +17,6 @@ MonoBehaviour:
   _maxHP: 100
   _maxMP: 100
   _attackDamage: 20
-  _attackMana: 15
+  _attackMana: 20
   _superAttackDamage: 50
-  _superAttackMana: 50
+  _superAttackMana: 30

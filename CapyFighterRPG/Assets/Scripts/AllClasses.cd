@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="StateMachine" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAgAIQIAACAAAAAAAAAACAAAAAAAJAA=</HashCode>
+      <FileName>Assets\Scripts\States\StateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CombatController" Collapsed="true">
+    <Position X="4.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QASIA0hBAKADAgQAQEAAAAECCJUAQBCACQAChKAQVkE=</HashCode>
+      <FileName>Assets\Scripts\CombatController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

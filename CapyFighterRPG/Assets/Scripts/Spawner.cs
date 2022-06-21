@@ -35,6 +35,8 @@ public class Spawner : MonoBehaviour
 
     public int MaxHeroRowCount => _maxHeroRowCount;
     public int MaxEnemyRowCount => _maxEnemyRowCount;
+    public int MaxHeroColumnCount => _heroSlots.Length / _maxHeroRowCount;
+    public int MaxEnemyColumnCount => _enemySlots.Length / _maxEnemyRowCount;
     public UnitData[] HeroSlots => _heroSlots;
     public UnitData[] EnemySlots => _enemySlots;
     public Vector3[] HeroSlotPositions => _heroSlotPositions;

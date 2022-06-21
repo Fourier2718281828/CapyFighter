@@ -918,7 +918,7 @@ MonoBehaviour:
   _enemyDiagonalToOrigin: {x: 10, y: 3, z: 0}
   _heroSlots:
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
@@ -926,7 +926,10 @@ MonoBehaviour:
   _enemySlots:
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
+  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
+  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
+  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
 --- !u!114 &1307390678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,7 +966,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1307390674}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 224563cae17447540ad6d222f91c870b, type: 3}
+  m_Script: {fileID: 11500000, guid: c056ce10147b7824998f08a00877b818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1462676589

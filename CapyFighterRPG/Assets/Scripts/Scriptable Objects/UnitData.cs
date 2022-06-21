@@ -5,19 +5,19 @@ public class UnitData : ScriptableObject
 {
     [SerializeField] private RuntimeAnimatorController _animator;
     [SerializeField] private Sprite _avatarIcon;
-    [SerializeField] private float _maxHP;
-    [SerializeField] private float _maxMP;
-    [SerializeField] private float _attackDamage;
-    [SerializeField] private float _attackMana;
-    [SerializeField] private float _superAttackDamage;
-    [SerializeField] private float _superAttackMana;
+    [SerializeField] private int _maxHP;
+    [SerializeField] private int _maxMP;
+    [SerializeField] private int _attackDamage;
+    [SerializeField] private int _attackMana;
+    [SerializeField] private int _superAttackDamage;
+    [SerializeField] private int _superAttackMana;
 
     public RuntimeAnimatorController Animator => _animator;
     public Sprite AvatarIcon => _avatarIcon;
-    public float MaxHP => _maxHP;
-    public float MaxMP => _maxMP;
-    public float AttackDamage => _attackDamage;
-    public float AttackMana => _attackMana;
-    public float SuperAttackDamage => _superAttackDamage;
-    public float SuperAttackMana => _superAttackMana;
+    public int MaxHP => _maxHP;
+    public int MaxMP => _maxMP;
+    public int AttackDamage => _attackDamage;
+    public int AttackMana => _attackMana;
+    public int SuperAttackDamage => _superAttackDamage;
+    public int SuperAttackMana => _superAttackMana;
 }   
