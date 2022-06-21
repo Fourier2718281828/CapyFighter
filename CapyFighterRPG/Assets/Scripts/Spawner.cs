@@ -33,6 +33,8 @@ public class Spawner : MonoBehaviour
     private Vector3[] _heroSlotPositions;
     private Vector3[] _enemySlotPositions;
 
+    public int HeroSlotCount => _heroSlots.Length;
+    public int EnemySlotCount => _enemySlots.Length;
     public int MaxHeroRowCount => _maxHeroRowCount;
     public int MaxEnemyRowCount => _maxEnemyRowCount;
     public int MaxHeroColumnCount => _heroSlots.Length / _maxHeroRowCount;
@@ -41,6 +43,11 @@ public class Spawner : MonoBehaviour
     public UnitData[] EnemySlots => _enemySlots;
     public Vector3[] HeroSlotPositions => _heroSlotPositions;
     public Vector3[] EnemySlotPositions => _enemySlotPositions;
+    public int HeroSlotRowsCount => GetSlotRowsCount(HeroSlots.Length, MaxHeroRowCount);
+    public int EnemySlotRowsCount => GetSlotRowsCount(EnemySlots.Length, MaxEnemyRowCount);
+    public int HeroSlotColsCount => GetSlotColsCount(HeroSlots.Length, MaxHeroRowCount);
+    public int EnemySlotColsCount => GetSlotColsCount(EnemySlots.Length, MaxEnemyRowCount);
+
 
 
     public void Awake()
@@ -55,11 +62,12 @@ public class Spawner : MonoBehaviour
         if (HeroSlots[slot] == null)
             throw new InvalidOperationException($"Trying to instantiate a hero at an empty slot : {slot}");
 
-        GameObject spawned = 
+        GameObject spawned =
             Instantiate(_unitPrefab, _heroSlotPositions[slot], Quaternion.identity, _unitContainer.transform);
 
         spawned.GetComponent<Unit>().Init(HeroSlots[slot]);
         spawned.GetComponent<SpriteRenderer>().flipX = false;
+        spawned.GetComponent<Mover>().GetPositionOfSlot += slot =>  HeroSlotPositions[slot];
 
         return spawned;
     }
@@ -76,6 +84,7 @@ public class Spawner : MonoBehaviour
 
         spawned.GetComponent<Unit>().Init(EnemySlots[slot]);
         spawned.GetComponent<SpriteRenderer>().flipX = true;
+        spawned.GetComponent<Mover>().GetPositionOfSlot += slot => EnemySlotPositions[slot];
 
         return spawned;
     }
@@ -115,6 +124,7 @@ public class Spawner : MonoBehaviour
         else
             return maxRowCount;
     }
+
     private int GetSlotColsCount(int totalSlotCount, int maxRowCount)
     {
         if (totalSlotCount < maxRowCount)

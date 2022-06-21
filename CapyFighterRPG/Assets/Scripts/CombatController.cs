@@ -21,7 +21,8 @@ public class CombatController : StateMachine
     [HideInInspector] public EnemyTurnState EnemyTurnState;
     [HideInInspector] public HeroTurnState HeroTurnState;
     [HideInInspector] public PauseState PauseState;
-    [HideInInspector] public PausableState PausableState;
+    [HideInInspector] public MovingState MovingState;
+
 
     #endregion
 
@@ -61,6 +62,7 @@ public class CombatController : StateMachine
         EnemyTurnState = new EnemyTurnState(this);
         HeroTurnState = new HeroTurnState(this);
         PauseState = new PauseState(this);
+        MovingState = new MovingState(this);
 
         SelectedHeroSlot = SelectedEnemySlot = -1;
     }
@@ -76,6 +78,7 @@ public class CombatController : StateMachine
         SpawnAllUnits();
         _hud.PlaceAllUnitInfos();
         AssignEventsToFighters();
+        AssignEventsToMovers();
     }
 
     private void Update()
@@ -97,7 +100,8 @@ public class CombatController : StateMachine
         return  (_spawner.HeroSlots.Length < _spawner.MaxEnemyRowCount || 
                 _spawner.HeroSlots.Length % _spawner.MaxEnemyRowCount == 0) &&
                 (_spawner.EnemySlots.Length < _spawner.MaxEnemyRowCount ||
-                _spawner.EnemySlots.Length % _spawner.MaxEnemyRowCount == 0);
+                _spawner.EnemySlots.Length % _spawner.MaxEnemyRowCount == 0) &&
+                _spawner.EnemySlots.Length == _spawner.HeroSlots.Length;
     }
 
     private void SpawnAllUnits()
@@ -148,6 +152,30 @@ public class CombatController : StateMachine
                 EnemiesToSlots.Remove(pair.Key);
                 EnemiesToFighters.Remove(pair.Key);
                 Destroy(pair.Key);
+            };
+        }
+    }
+
+    private void AssignEventsToMovers()
+    {
+        Mover mover;
+        foreach (var pair in HerosToFighters)
+        {
+            mover = pair.Key.GetComponent<Mover>();
+            mover.OnMoving += index =>
+            {
+                HerosToSlots[pair.Key] = index;
+                SelectedHeroSlot = index;
+            };
+        }
+
+        foreach (var pair in EnemiesToFighters)
+        {
+            mover = pair.Key.GetComponent<Mover>();
+            mover.OnMoving += index =>
+            {
+                EnemiesToSlots[pair.Key] = index;
+                SelectedEnemySlot = index;
             };
         }
     }
@@ -224,6 +252,14 @@ public class CombatController : StateMachine
 
     public Fighter GetEnemyFighterAtSlot(int slot) => EnemiesToFighters[GetEnemyAtSlot(slot)];
 
+    public bool IsHeroSlotOccupied(int slot) 
+        => HerosToSlots.FirstOrDefault(hero => hero.Value == slot).Key != null;
+
+    public bool IsEnemySlotOccupied(int slot)
+        => EnemiesToSlots.FirstOrDefault(enemy => enemy.Value == slot).Key != null;
+
+    public int GetRowOfHeroSlot(int slot) => slot / _spawner.HeroSlotColsCount;
+
     public GameObject GetHeroByFighter(Fighter fighter)
     {
         GameObject res = HerosToFighters.FirstOrDefault(hero => hero.Value == fighter).Key;
@@ -253,10 +289,11 @@ public class CombatController : StateMachine
         SelectedHeroSlot = SelectedEnemySlot = -1;
     }
 
-    public bool AreSlotsSelected()
-    {
-        return SelectedHeroSlot != -1 && SelectedEnemySlot != -1;
-    }
+    public bool IsHeroSlotSelected() => SelectedHeroSlot != -1;
+
+    public bool IsEnemySlotSelected() => SelectedEnemySlot != -1;
+
+    public bool AreSlotsSelected() => IsHeroSlotSelected() && IsEnemySlotSelected();
 
     public void PauseCombat() => Time.timeScale = 0f;
     
