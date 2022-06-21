@@ -5,7 +5,7 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject _unitPrefab;
 
-    [Header("GameObject to store all units in")]
+    [Header("GameObject to store all units in. Not a unit prefab!")]
     [SerializeField] private GameObject _unitContainer;
 
     [Header("Slot Count Boundaries")]
@@ -37,6 +37,9 @@ public class Spawner : MonoBehaviour
     public int MaxEnemyRowCount => _maxEnemyRowCount;
     public UnitData[] HeroSlots => _heroSlots;
     public UnitData[] EnemySlots => _enemySlots;
+    public Vector3[] HeroSlotPositions => _heroSlotPositions;
+    public Vector3[] EnemySlotPositions => _enemySlotPositions;
+
 
     public void Awake()
     {

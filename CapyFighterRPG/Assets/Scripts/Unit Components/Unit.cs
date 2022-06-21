@@ -19,7 +19,7 @@ public class Unit : MonoBehaviour
     private void OnEnable()
     {
         _fighter.OnAttacked         += _ => _animator.Play("Attack");
-        _fighter.OnDamageReceived   += _ => _animator.Play("Hurt");
+        _fighter.OnDamageReceived   += (p, d) => _animator.Play("Hurt");
         _fighter.OnSuperAttacked    += _ => _animator.Play("SuperAttack");
     }
     #endregion
@@ -33,6 +33,7 @@ public class Unit : MonoBehaviour
     #endregion
 
     #region Properties
+    public Sprite AvatarIcon => _data.AvatarIcon;
     public float MaxHP => _data.MaxHP;
     public float MaxMP => _data.MaxMP;
     public float AttackDamage => _data.AttackDamage;

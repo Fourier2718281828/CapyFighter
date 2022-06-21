@@ -4,6 +4,7 @@ using UnityEngine;
 public class UnitData : ScriptableObject
 {
     [SerializeField] private RuntimeAnimatorController _animator;
+    [SerializeField] private Sprite _avatarIcon;
     [SerializeField] private float _maxHP;
     [SerializeField] private float _maxMP;
     [SerializeField] private float _attackDamage;
@@ -12,6 +13,7 @@ public class UnitData : ScriptableObject
     [SerializeField] private float _superAttackMana;
 
     public RuntimeAnimatorController Animator => _animator;
+    public Sprite AvatarIcon => _avatarIcon;
     public float MaxHP => _maxHP;
     public float MaxMP => _maxMP;
     public float AttackDamage => _attackDamage;

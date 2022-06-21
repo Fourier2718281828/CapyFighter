@@ -852,6 +852,7 @@ GameObject:
   - component: {fileID: 1307390678}
   - component: {fileID: 1307390676}
   - component: {fileID: 1307390679}
+  - component: {fileID: 1307390680}
   m_Layer: 0
   m_Name: CombatController
   m_TagString: CombatController
@@ -919,6 +920,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   - {fileID: 0}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
+  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
+  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
+  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   _enemySlots:
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
@@ -935,8 +939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a004a5c1e52505245a40759f0a69b7fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectedHeroSlot: 0
-  _selectedEnemySlot: 0
+  _turnDurationSeconds: 2
   _mainCamera: {fileID: 519420031}
 --- !u!114 &1307390679
 MonoBehaviour:
@@ -951,6 +954,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pauseCanvas: {fileID: 1970939384}
+--- !u!114 &1307390680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307390674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 224563cae17447540ad6d222f91c870b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1462676589
 GameObject:
   m_ObjectHideFlags: 0

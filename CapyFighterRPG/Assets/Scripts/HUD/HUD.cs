@@ -36,17 +36,17 @@ public class HUD : MonoBehaviour
     {
         foreach(var pair in FightersToUnitInfos)
         {
-            pair.Key.OnDamageReceived   += percentage => pair.Value.SetHP(percentage);
-            pair.Key.OnAttacked         += percentage => pair.Value.SetMP(percentage);
-            pair.Key.OnSuperAttacked    += percentage => pair.Value.SetMP(percentage);
+            pair.Key.OnDamageReceived   += (perc, dam)  => pair.Value.SetHP(perc);
+            pair.Key.OnAttacked         += percentage   => pair.Value.SetMP(percentage);
+            pair.Key.OnSuperAttacked    += percentage   => pair.Value.SetMP(percentage);
             //... for other hero attacks
         }
 
         foreach (var pair in FightersToUnitInfos)
         {
-            pair.Key.OnDamageReceived   += percentage => pair.Value.SetHP(percentage);
-            pair.Key.OnAttacked         += percentage => pair.Value.SetMP(percentage);
-            pair.Key.OnSuperAttacked    += percentage => pair.Value.SetMP(percentage);
+            pair.Key.OnDamageReceived   += (perc, dam)  => pair.Value.SetHP(perc);
+            pair.Key.OnAttacked         += percentage   => pair.Value.SetMP(percentage);
+            pair.Key.OnSuperAttacked    += percentage   => pair.Value.SetMP(percentage);
             //... for other enemy attacks
         }
     }
@@ -69,6 +69,7 @@ public class HUD : MonoBehaviour
             unitInfoObject = Instantiate(_unitInfoPrefab, positions[i++], 
                                         Quaternion.identity, _hudCanvas.transform);
             script = unitInfoObject.GetComponent<UnitInfo>();
+            script.SetAvatarImage(unit.Value.GetComponent<Unit>().AvatarIcon);
             _fightersToUnitInfos.Add(unit.Value, script);
         }
 
@@ -80,6 +81,7 @@ public class HUD : MonoBehaviour
             unitInfoObject = Instantiate(_unitInfoPrefab, positions[i++],
                                         Quaternion.identity, _hudCanvas.transform);
             script = unitInfoObject.GetComponent<UnitInfo>();
+            script.SetAvatarImage(unit.Value.GetComponent<Unit>().AvatarIcon);
             _fightersToUnitInfos.Add(unit.Value, script);
         }
 

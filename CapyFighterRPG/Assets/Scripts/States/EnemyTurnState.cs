@@ -12,13 +12,13 @@ public class EnemyTurnState : PausableState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("EnemyTurn entered");
+        //Debug.Log("EnemyTurn entered");
     }
 
     public override void ExitState()
     {
         base.ExitState(); 
-        Debug.Log("EnemyTurn exited");
+        //Debug.Log("EnemyTurn exited");
     }
 
     public override void UpdateLogic()

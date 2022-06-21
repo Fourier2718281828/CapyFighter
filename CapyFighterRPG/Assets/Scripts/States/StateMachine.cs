@@ -23,8 +23,6 @@ public abstract class StateMachine : MonoBehaviour
 
     public void SwitchState(State newState)
     {
-        Debug.Log("State changed");
-
         PreviousState = CurrentState;
         CurrentState.ExitState();
         CurrentState = newState;
@@ -40,7 +38,7 @@ public abstract class StateMachine : MonoBehaviour
 
     private IEnumerator SwitchStateCoroutine(State newState, float seconds)
     {
-        CurrentState.ExitState();
+        PreviousState = CurrentState;
         CurrentState.ExitState();
         yield return new WaitForSeconds(seconds);
         CurrentState = newState;

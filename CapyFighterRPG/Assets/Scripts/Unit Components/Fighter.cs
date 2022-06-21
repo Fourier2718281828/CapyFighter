@@ -8,7 +8,7 @@ public class Fighter : MonoBehaviour
     private float _currentMP;
 
     #region Events
-    public event Action<float> OnDamageReceived;
+    public event Action<float, float> OnDamageReceived;
     public event Action<float> OnAttacked;
     public event Action<float> OnSuperAttacked;
     public event Action OnDied;
@@ -31,8 +31,8 @@ public class Fighter : MonoBehaviour
 
         if (IsDead())
             OnDied?.Invoke();
-        
-        OnDamageReceived?.Invoke(HPPercentage());
+        else
+            OnDamageReceived?.Invoke(HPPercentage(), damage);
     }
 
     public void Attack(Fighter victim)

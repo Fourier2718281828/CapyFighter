@@ -12,9 +12,10 @@ public class CombatController : StateMachine
     private Dictionary<GameObject, int> _enemiesToSlots;
     private Dictionary<GameObject, Fighter> _herosToFighters;
     private Dictionary<GameObject, Fighter> _enemiesToFighters;
-    [SerializeField] private int _selectedHeroSlot;
-    [SerializeField] private int _selectedEnemySlot;
+    private int _selectedHeroSlot;
+    private int _selectedEnemySlot;
 
+    [SerializeField] private float _turnDurationSeconds;
     [SerializeField] private Camera _mainCamera;
 
     [HideInInspector] public EnemyTurnState EnemyTurnState;
@@ -25,6 +26,7 @@ public class CombatController : StateMachine
     #endregion
 
     #region Properties
+    public float TurnDurationSeconds => _turnDurationSeconds;
     public Dictionary<GameObject, int> HerosToSlots => _herosToSlots;
     public Dictionary<GameObject, int> EnemiesToSlots => _enemiesToSlots;
     public Dictionary<GameObject, Fighter> HerosToFighters => _herosToFighters;
@@ -149,7 +151,6 @@ public class CombatController : StateMachine
             };
         }
     }
-
 
     private void SetSelectedUnitsSlots()
     {
