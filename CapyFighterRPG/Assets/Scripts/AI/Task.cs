@@ -6,6 +6,7 @@ public class Task
     private AIObject _taskDoer;
     private AIObject _target;
     private TaskType _type;
+    private bool _isAssigned;
 
     public int Priority { get; private set; }
     public AIObject TaskDoer => _taskDoer;
@@ -17,12 +18,14 @@ public class Task
         Attack,
         EquipShield,
         Move,
+        SkipTurn,
     }
 
     public Task(TaskType taskType, AIObject target = null)
     {
         _type = taskType;
         Priority = (int)taskType;
+        _isAssigned = false;
 
         switch (taskType)
         {
@@ -35,6 +38,8 @@ public class Task
             case TaskType.EquipShield:
                 break;
             case TaskType.Move:
+                break;
+            case TaskType.SkipTurn:
                 break;
             default:
                 throw new InvalidOperationException("No such task type.");
@@ -60,14 +65,20 @@ public class Task
             case TaskType.Move:
                 //TODO
                 break;
+            case TaskType.SkipTurn:
+                break;
             default:
                 throw new InvalidOperationException("No such task type.");
         }
     }
 
-    public void Assign(AIObject obj) => _taskDoer = obj ?? throw new ArgumentNullException("Cannot assign null as doer.");
+    public void Assign(AIObject obj)
+    {
+        _taskDoer = obj;
+        _isAssigned = true;
+    }
 
-    public bool IsAssigned() => _taskDoer != null;
+    public bool IsAssigned() => _isAssigned;
 
     public int PriorityModifier => 0;
 }

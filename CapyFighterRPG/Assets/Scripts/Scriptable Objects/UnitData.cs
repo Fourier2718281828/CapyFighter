@@ -13,6 +13,7 @@ public class UnitData : ScriptableObject
     [SerializeField] private int _superAttackManaCost;
     [SerializeField] private int _maxShieldHP;
     [SerializeField] private int _shieldManaCost;
+    [SerializeField] private int _manaRegainRate;
 
     public RuntimeAnimatorController Animator => _animator;
     public Sprite AvatarIcon => _avatarIcon;
@@ -24,4 +25,5 @@ public class UnitData : ScriptableObject
     public int SuperAttackManaCost => _superAttackManaCost;
     public int MaxShieldHP => _maxShieldHP;
     public int ShieldManaCost => _shieldManaCost;
+    public int ManaRegainRate => _manaRegainRate;
 }   

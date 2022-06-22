@@ -14,7 +14,11 @@ public class EnemyTurnState : PausableState
     public override void EnterState()
     {
         base.EnterState();
-        //Debug.Log("EnemyTurn entered");
+
+        foreach (var fighter in _controller.EnemiesToFighters.Values)
+        {
+            fighter.RegainMana();
+        }
     }
 
     public override void ExitState()
@@ -29,12 +33,6 @@ public class EnemyTurnState : PausableState
 
         Task taskToDo = _enemyAI.NextTurnTask();
         taskToDo.Do();
-
-        //Fighter enemy = _controller.GetEnemyFighterAtSlot(0);
-        //Fighter victim = _controller.GetHeroFighterAtSlot(0);
-
-        //enemy.Attack(victim);
-
         _controller.SwitchState(_controller.HeroTurnState);
     }
 }

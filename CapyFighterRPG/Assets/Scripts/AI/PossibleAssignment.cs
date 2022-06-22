@@ -23,7 +23,7 @@ public class PossibleAssignment : IComparable<PossibleAssignment>
     {
         if (TaskToDo.IsAssigned()) return;
         TaskToDo.Assign(_possibleTaskDoer);
-        _possibleTaskDoer.Assign(this);
+        _possibleTaskDoer?.Assign(this);
     }
 
     private int EvaluateScore()

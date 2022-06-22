@@ -42,6 +42,7 @@ public class Unit : MonoBehaviour
     public int SuperAttackManaCost => _data.SuperAttackManaCost;
     public int MaxShieldHP => _data.MaxShieldHP;
     public int ShieldManaCost => _data.ShieldManaCost;
+    public int ManaRegainRate => _data.ManaRegainRate;
     #endregion
 
     #region Component Properties

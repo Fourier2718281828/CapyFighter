@@ -28,10 +28,11 @@ public class AIObject : MonoBehaviour
             case Task.TaskType.EquipShield:
                 return Fighter.CanEquipShield();
             case Task.TaskType.Move:
-                break;
+                return false;
+            case Task.TaskType.SkipTurn:
+                return true;
             default:
                 throw new InvalidOperationException("No such task type.");
         }
-        return true;
     }
 }

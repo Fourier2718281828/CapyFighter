@@ -12,9 +12,9 @@ public class Fighter : MonoBehaviour
     private bool _isShielded;
 
     #region Events
-    public event Action<float, float> OnDamageReceived;
-    public event Action<float, float> OnShieldDamageReceived;
-    public event Action<float> OnManaSpended;
+    public event Action<float, int> OnDamageReceived;
+    public event Action<float, int> OnShieldDamageReceived;
+    public event Action<float> OnManaAmountChanged;
     public event Action<float> OnAttacked;
     public event Action<float> OnSuperAttacked;
     public event Action OnDied;
@@ -51,6 +51,7 @@ public class Fighter : MonoBehaviour
             OnDied?.Invoke();
         else
             OnDamageReceived?.Invoke(HPPercentage(), totalDamage);
+        Debug.Log($"HP percentage = {HPPercentage()}");
     }
 
     public void Attack(Fighter victim)
@@ -116,7 +117,7 @@ public class Fighter : MonoBehaviour
         if (!HasEnoughManaFor(mp))
             throw new InvalidOperationException("Not enough mana for the operation.");
         _currentMP -= mp;
-        OnManaSpended?.Invoke(MPPercentage());
+        OnManaAmountChanged?.Invoke(MPPercentage());
     }
 
     public void ReceiveShieldDamage(ref int totalDamage)
@@ -147,4 +148,13 @@ public class Fighter : MonoBehaviour
     public float ShielHPPercentage() => (float)_shieldHP / _unit.MaxShieldHP;
 
     public bool HasEnoughManaFor(int manaCost) => _currentMP >= manaCost;
+
+    public void RegainMana()
+    {
+        if (_currentMP + _unit.ManaRegainRate >= _unit.MaxMP)
+            _currentMP = _unit.MaxMP;
+        else
+            _currentMP = _currentMP + _unit.ManaRegainRate;
+        OnManaAmountChanged?.Invoke(MPPercentage());
+    }
 }

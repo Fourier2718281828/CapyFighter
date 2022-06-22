@@ -18,6 +18,11 @@ public class HeroTurnState : PausableState
     {
         base.EnterState();
         _theTurnIsUsed = false;
+
+        foreach(var fighter in _controller.HerosToFighters.Values)
+        {
+            fighter.RegainMana();
+        }
     }
 
     public override void ExitState()

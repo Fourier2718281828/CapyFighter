@@ -25,6 +25,7 @@ public class EnemyAI : MonoBehaviour
         GatherTasks();
         GeneratePossibleAssignments();
         _possibleAssignmentList.Sort();
+        Debug.Log($"assignment list size = {_possibleAssignmentList.Count}");
         _possibleAssignmentList[0].Assign();
         return _possibleAssignmentList[0].TaskToDo;
     }
@@ -52,6 +53,8 @@ public class EnemyAI : MonoBehaviour
 
     private void GatherTasks()
     {
+        _taskList.Add(new Task(Task.TaskType.SkipTurn));
+
         foreach(var hero in _heroList)
         {
             _taskList.Add(new Task(Task.TaskType.Attack, hero));
