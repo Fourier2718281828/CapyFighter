@@ -918,9 +918,9 @@ MonoBehaviour:
   _enemyOriginsNeighbour: {x: 0, y: 3, z: 0}
   _enemyDiagonalToOrigin: {x: 10, y: 3, z: 0}
   _heroSlots:
+  - {fileID: 11400000, guid: e2466f7c9e4e05b48a4f02eff3f3fd05, type: 2}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
-  - {fileID: 0}
   _enemySlots:
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   - {fileID: 0}
