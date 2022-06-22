@@ -37,9 +37,11 @@ public class Unit : MonoBehaviour
     public int MaxHP => _data.MaxHP;
     public int MaxMP => _data.MaxMP;
     public int AttackDamage => _data.AttackDamage;
-    public int AttackMana => _data.AttackMana;
+    public int AttackManaCost => _data.AttackManaCost;
     public int SuperAttackDamage => _data.SuperAttackDamage;
-    public int SuperAttackMana => _data.SuperAttackMana;
+    public int SuperAttackManaCost => _data.SuperAttackManaCost;
+    public int MaxShieldHP => _data.MaxShieldHP;
+    public int ShieldManaCost => _data.ShieldManaCost;
     #endregion
 
     #region Component Properties

@@ -8,16 +8,20 @@ public class UnitData : ScriptableObject
     [SerializeField] private int _maxHP;
     [SerializeField] private int _maxMP;
     [SerializeField] private int _attackDamage;
-    [SerializeField] private int _attackMana;
+    [SerializeField] private int _attackManaCost;
     [SerializeField] private int _superAttackDamage;
-    [SerializeField] private int _superAttackMana;
+    [SerializeField] private int _superAttackManaCost;
+    [SerializeField] private int _maxShieldHP;
+    [SerializeField] private int _shieldManaCost;
 
     public RuntimeAnimatorController Animator => _animator;
     public Sprite AvatarIcon => _avatarIcon;
     public int MaxHP => _maxHP;
     public int MaxMP => _maxMP;
     public int AttackDamage => _attackDamage;
-    public int AttackMana => _attackMana;
+    public int AttackManaCost => _attackManaCost;
     public int SuperAttackDamage => _superAttackDamage;
-    public int SuperAttackMana => _superAttackMana;
+    public int SuperAttackManaCost => _superAttackManaCost;
+    public int MaxShieldHP => _maxShieldHP;
+    public int ShieldManaCost => _shieldManaCost;
 }   

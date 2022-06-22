@@ -8,12 +8,18 @@ public class Fighter : MonoBehaviour
     private FieldMetricSpace _fieldMetricSpace;
     private int _currentHP;
     private int _currentMP;
+    private int _shieldHP;
+    private bool _isShielded;
 
     #region Events
     public event Action<float, float> OnDamageReceived;
+    public event Action<float, float> OnShieldDamageReceived;
+    public event Action<float> OnManaSpended;
     public event Action<float> OnAttacked;
     public event Action<float> OnSuperAttacked;
     public event Action OnDied;
+    public event Action OnShieldEquiped;
+    public event Action OnShieldBroken;
     #endregion
 
     private void Awake()
@@ -28,28 +34,35 @@ public class Fighter : MonoBehaviour
     {
         _currentHP = _unit.MaxHP;
         _currentMP = _unit.MaxMP;
+        _shieldHP = 0;
+        _isShielded = false;
     }
 
     public void ReceiveDamage(int damage)
     {
-        SpendHealth(damage);
+        var totalDamage = damage;
+
+        if (_isShielded)
+            ReceiveShieldDamage(ref totalDamage);
+
+        SpendHealth(totalDamage);
 
         if (IsDead())
             OnDied?.Invoke();
         else
-            OnDamageReceived?.Invoke(HPPercentage(), damage);
+            OnDamageReceived?.Invoke(HPPercentage(), totalDamage);
     }
 
     public void Attack(Fighter victim)
     {
-        SpendMana(_unit.AttackMana);
+        SpendMana(_unit.AttackManaCost);
         victim.ReceiveDamage(GetAttackDamageTo(victim));
         OnAttacked?.Invoke(MPPercentage());
     }
 
     public void SuperAttack(Fighter victim)
     {
-        SpendMana(_unit.SuperAttackMana);
+        SpendMana(_unit.SuperAttackManaCost);
         victim.ReceiveDamage(GetSuperAttackDamageTo(victim));
         OnSuperAttacked?.Invoke(MPPercentage());
     }
@@ -77,19 +90,61 @@ public class Fighter : MonoBehaviour
         return (int)(damageMultiplier * _unit.SuperAttackDamage);
     }
 
+    public void EquipShield()
+    {
+        SpendMana(_unit.ShieldManaCost);
+        _isShielded = true;
+        _shieldHP = _unit.MaxShieldHP;
+        OnShieldEquiped?.Invoke();
+    }
+
+    public void BreakTheShield()
+    {
+        _isShielded = false;
+        _shieldHP = 0;
+        OnShieldBroken?.Invoke();
+    }
+
     public bool IsDead() => _currentHP < Mathf.Epsilon;
 
-    public float SpendHealth(int hp)
+    public void SpendHealth(int hp)
+        => _currentHP = hp >= _currentHP ? 0 : _currentHP - hp;
+    
+
+    public void SpendMana(int mp)
     {
-        return _currentHP = hp >= _currentHP ? 0 : _currentHP - hp;
+        if (!HasEnoughManaFor(mp))
+            throw new InvalidOperationException("Not enough mana for the operation.");
+        _currentMP -= mp;
+        OnManaSpended?.Invoke(MPPercentage());
     }
 
-    public float SpendMana(int mp)
+    public void ReceiveShieldDamage(ref int totalDamage)
     {
-        return _currentMP = mp >= _currentMP ? 0 : _currentMP - mp;
+        if(totalDamage >= _shieldHP)
+        {
+            totalDamage -= _shieldHP;
+            _shieldHP = 0;
+        }
+        else //All Damage Absorbed
+        {
+            _shieldHP -= totalDamage;
+            OnShieldDamageReceived?.Invoke(ShielHPPercentage(), totalDamage);
+            totalDamage = 0;
+        }
     }
+
+    public bool CanAttack() => HasEnoughManaFor(_unit.AttackManaCost);
+
+    public bool CanSuperAttack() => HasEnoughManaFor(_unit.SuperAttackManaCost);
+
+    public bool CanEquipShield() => HasEnoughManaFor(_unit.ShieldManaCost);
 
     public float HPPercentage() => (float)_currentHP / _unit.MaxHP;
 
     public float MPPercentage() => (float)_currentMP / _unit.MaxMP;
+
+    public float ShielHPPercentage() => (float)_shieldHP / _unit.MaxShieldHP;
+
+    public bool HasEnoughManaFor(int manaCost) => _currentMP >= manaCost;
 }

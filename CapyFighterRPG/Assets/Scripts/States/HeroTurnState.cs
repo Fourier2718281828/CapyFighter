@@ -18,13 +18,11 @@ public class HeroTurnState : PausableState
     {
         base.EnterState();
         _theTurnIsUsed = false;
-        //Debug.Log("HeroTurn entered");
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        //Debug.Log("HeroTurn exited");
     }
 
     public override void UpdateLogic()
@@ -35,6 +33,7 @@ public class HeroTurnState : PausableState
 
         if (!_controller.IsHeroSlotSelected()) return;
 
+        //Moving
         if(Input.GetKeyDown(KeyCode.UpArrow))
         {
             MoveUp();
@@ -55,6 +54,12 @@ public class HeroTurnState : PausableState
             MoveRight();
         }
 
+        //Shield equipment
+        if(Input.GetKey(KeyCode.D))
+        {
+            EquipShield();
+        }
+
         if (!_controller.AreSlotsSelected()) return;
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -70,21 +75,53 @@ public class HeroTurnState : PausableState
     private void Attack()
     {
         Fighter attackingFighter = _controller.GetHeroFighterAtSlot(_controller.SelectedHeroSlot);
-        Fighter victimFighter = _controller.GetEnemyFighterAtSlot(_controller.SelectedEnemySlot);
-        attackingFighter.Attack(victimFighter);
-        _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
-        _controller.RefreshSelectedSlots();
-        _theTurnIsUsed = true;
+
+        if (attackingFighter.CanAttack())
+        {
+            Fighter victimFighter = _controller.GetEnemyFighterAtSlot(_controller.SelectedEnemySlot);
+            attackingFighter.Attack(victimFighter);
+            _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
+            _controller.RefreshSelectedSlots();
+            _theTurnIsUsed = true;
+        }
+        else
+        {
+            //TODO some message like "Not enough mana"
+        }
     }
 
     private void SuperAttack()
     {
         Fighter attackingFighter = _controller.GetHeroFighterAtSlot(_controller.SelectedHeroSlot);
-        Fighter victimFighter = _controller.GetEnemyFighterAtSlot(_controller.SelectedEnemySlot);
-        attackingFighter.SuperAttack(victimFighter);
-        _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
-        _controller.RefreshSelectedSlots();
-        _theTurnIsUsed = true;
+
+        if(attackingFighter.CanSuperAttack())
+        {
+            Fighter victimFighter = _controller.GetEnemyFighterAtSlot(_controller.SelectedEnemySlot);
+            attackingFighter.SuperAttack(victimFighter);
+            _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
+            _controller.RefreshSelectedSlots();
+            _theTurnIsUsed = true;
+        }
+        else
+        {
+            //TODO some message like "Not enough mana"
+        }
+    }
+
+    private void EquipShield()
+    {
+        Fighter fighterToGetEquiped = _controller.GetHeroFighterAtSlot(_controller.SelectedHeroSlot);
+        if (fighterToGetEquiped.CanEquipShield())
+        {
+            fighterToGetEquiped.EquipShield();
+            _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
+            _controller.RefreshSelectedSlots();
+            _theTurnIsUsed = true;
+        }
+        else
+        {
+            //TODO make some message like "Not enough mana"
+        }
     }
 
     private void MoveUp()
