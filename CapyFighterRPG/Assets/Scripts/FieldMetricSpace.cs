@@ -6,8 +6,6 @@ public class FieldMetricSpace : MonoBehaviour
     private Vector2[] _heroSlotsToMetricPoints;
     private Vector2[] _enemySlotsToMetricPoints;
 
-    //[SerializeField] private float _squizeCoefficient;
-
     private void Awake()
     {
         _spawner = GetComponent<Spawner>();
@@ -20,7 +18,6 @@ public class FieldMetricSpace : MonoBehaviour
         ArrangeVectorField();
     }
 
-    //TODO generalize
     private void ArrangeVectorField()
     {
         switch (_spawner.HeroSlots.Length)
@@ -51,13 +48,7 @@ public class FieldMetricSpace : MonoBehaviour
         {
             _enemySlotsToMetricPoints[i] = new Vector2
                 (-_heroSlotsToMetricPoints[i].x, _heroSlotsToMetricPoints[i].y);
-        }
-
-        //for(int i = 0; i < _heroSlotsToMetricPoints.Length; ++i)
-        //{
-        //    _heroSlotsToMetricPoints[i].x *= _squizeCoefficient;
-        //    _enemySlotsToMetricPoints[i].x *= _squizeCoefficient;
-        //}    
+        }  
     }
 
     public float Metric(int heroSlot, int enemySlot)

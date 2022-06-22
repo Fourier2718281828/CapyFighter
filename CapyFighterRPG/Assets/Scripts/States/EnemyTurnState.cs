@@ -3,10 +3,12 @@
 public class EnemyTurnState : PausableState
 {
     private readonly CombatController _controller;
+    private readonly EnemyAI _enemyAI;
     public EnemyTurnState(CombatController stateMachine)
         : base(stateMachine)
     {
         _controller = stateMachine;
+        _enemyAI = _controller.GetComponent<EnemyAI>();
     }
 
     public override void EnterState()
@@ -25,10 +27,13 @@ public class EnemyTurnState : PausableState
     {
         base.UpdateLogic();
 
-        Fighter enemy = _controller.GetEnemyFighterAtSlot(0);
-        Fighter victim = _controller.GetHeroFighterAtSlot(0);
+        Task taskToDo = _enemyAI.NextTurnTask();
+        taskToDo.Do();
 
-        enemy.Attack(victim);
+        //Fighter enemy = _controller.GetEnemyFighterAtSlot(0);
+        //Fighter victim = _controller.GetHeroFighterAtSlot(0);
+
+        //enemy.Attack(victim);
 
         _controller.SwitchState(_controller.HeroTurnState);
     }

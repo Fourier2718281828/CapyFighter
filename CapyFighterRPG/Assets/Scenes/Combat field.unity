@@ -853,6 +853,7 @@ GameObject:
   - component: {fileID: 1307390676}
   - component: {fileID: 1307390679}
   - component: {fileID: 1307390680}
+  - component: {fileID: 1307390681}
   m_Layer: 0
   m_Name: CombatController
   m_TagString: CombatController
@@ -920,15 +921,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   _enemySlots:
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
-  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
-  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
-  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
-  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
 --- !u!114 &1307390678
 MonoBehaviour:
@@ -967,6 +962,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c056ce10147b7824998f08a00877b818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1307390681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307390674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf3504ac54f49b947b838e7c56a1d7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1462676589
