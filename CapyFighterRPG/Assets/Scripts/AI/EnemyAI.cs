@@ -9,6 +9,15 @@ public class EnemyAI : MonoBehaviour
     private List<AIObject> _enemyList;
     private List<Task> _taskList;
 
+    [SerializeField] private float _possibleDamageWeight;
+    [SerializeField] private float _possibleHPSaveWeight;
+    [SerializeField] private float _possibleMPCostWeight;
+
+    public float PossibleDamageWeight => _possibleDamageWeight;
+    public float PossibleHPSaveWeight => _possibleHPSaveWeight;
+    public float PossibleMPCostWeight => _possibleMPCostWeight;
+
+
     private void Awake()
     {
         _controller = GetComponent<CombatController>();
@@ -25,7 +34,6 @@ public class EnemyAI : MonoBehaviour
         GatherTasks();
         GeneratePossibleAssignments();
         _possibleAssignmentList.Sort();
-        Debug.Log($"assignment list size = {_possibleAssignmentList.Count}");
         _possibleAssignmentList[0].Assign();
         return _possibleAssignmentList[0].TaskToDo;
     }
@@ -75,7 +83,7 @@ public class EnemyAI : MonoBehaviour
             {
                 if(enemy.IsTaskSuitable(task))
                 {
-                    _possibleAssignmentList.Add(new PossibleAssignment(task, enemy));
+                    _possibleAssignmentList.Add(new PossibleAssignment(task, enemy, this));
                 }
             }
         }

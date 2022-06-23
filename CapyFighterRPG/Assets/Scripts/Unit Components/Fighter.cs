@@ -22,6 +22,10 @@ public class Fighter : MonoBehaviour
     public event Action OnShieldBroken;
     #endregion
 
+    #region Properties
+    public Unit Unit => _unit;
+    #endregion
+
     private void Awake()
     {
         _unit = GetComponent<Unit>();
@@ -51,7 +55,6 @@ public class Fighter : MonoBehaviour
             OnDied?.Invoke();
         else
             OnDamageReceived?.Invoke(HPPercentage(), totalDamage);
-        Debug.Log($"HP percentage = {HPPercentage()}");
     }
 
     public void Attack(Fighter victim)

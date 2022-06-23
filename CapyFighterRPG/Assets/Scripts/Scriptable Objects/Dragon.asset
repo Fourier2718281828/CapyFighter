@@ -18,7 +18,8 @@ MonoBehaviour:
   _maxMP: 100
   _attackDamage: 20
   _attackManaCost: 10
-  _superAttackDamage: 50
+  _superAttackDamage: 40
   _superAttackManaCost: 50
   _maxShieldHP: 25
   _shieldManaCost: 30
+  _manaRegainRate: 5

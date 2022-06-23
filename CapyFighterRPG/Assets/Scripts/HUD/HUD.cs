@@ -36,15 +36,23 @@ public class HUD : MonoBehaviour
     {
         foreach(var pair in FightersToUnitInfos)
         {
-            pair.Key.OnDamageReceived   += (perc, dam)  => pair.Value.SetHP(perc);
-            pair.Key.OnManaAmountChanged      += percentage   => pair.Value.SetMP(percentage);
+            pair.Key.OnDamageReceived       += (perc, dam)  => pair.Value.SetHP(perc);
+            pair.Key.OnManaAmountChanged    += percentage   => pair.Value.SetMP(percentage);
+            pair.Key.OnDied += () =>
+            {
+                pair.Value.SetHP(0f);
+            };
             //... for other hero attacks
         }
 
         foreach (var pair in FightersToUnitInfos)
         {
-            pair.Key.OnDamageReceived   += (perc, dam)  => pair.Value.SetHP(perc);
-            pair.Key.OnManaAmountChanged      += percentage   => pair.Value.SetMP(percentage);
+            pair.Key.OnDamageReceived       += (perc, dam)  => pair.Value.SetHP(perc);
+            pair.Key.OnManaAmountChanged    += percentage   => pair.Value.SetMP(percentage);
+            pair.Key.OnDied += () =>
+            {
+                pair.Value.SetHP(0f);
+            };
             //... for other enemy attacks
         }
     }

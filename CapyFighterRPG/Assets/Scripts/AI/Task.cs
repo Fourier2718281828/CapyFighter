@@ -10,15 +10,17 @@ public class Task
 
     public int Priority { get; private set; }
     public AIObject TaskDoer => _taskDoer;
+    public AIObject Target => _target;
     public TaskType Type => _type;
 
+    //The order means
     public enum TaskType
     {
-        SuperAttack = 1,
-        Attack,
-        EquipShield,
+        SkipTurn = 1,
         Move,
-        SkipTurn,
+        EquipShield,
+        Attack,
+        SuperAttack,
     }
 
     public Task(TaskType taskType, AIObject target = null)
@@ -80,5 +82,5 @@ public class Task
 
     public bool IsAssigned() => _isAssigned;
 
-    public int PriorityModifier => 0;
+    public int PriorityModifier() => 0;
 }
