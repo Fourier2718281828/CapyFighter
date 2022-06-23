@@ -85,7 +85,10 @@ public class HeroTurnState : PausableState
         {
             Fighter victimFighter = _controller.GetEnemyFighterAtSlot(_controller.SelectedEnemySlot);
             attackingFighter.Attack(victimFighter);
-            _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
+            if (_controller.EnemyCount == 0)
+                _controller.SwitchStateInSeconds(_controller.WinState, _controller.TurnDurationSeconds);
+            else
+                _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
             _controller.RefreshSelectedSlots();
             _theTurnIsUsed = true;
         }
@@ -103,7 +106,10 @@ public class HeroTurnState : PausableState
         {
             Fighter victimFighter = _controller.GetEnemyFighterAtSlot(_controller.SelectedEnemySlot);
             attackingFighter.SuperAttack(victimFighter);
-            _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
+            if (_controller.EnemyCount == 0)
+                _controller.SwitchStateInSeconds(_controller.WinState, _controller.TurnDurationSeconds);
+            else
+                _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
             _controller.RefreshSelectedSlots();
             _theTurnIsUsed = true;
         }

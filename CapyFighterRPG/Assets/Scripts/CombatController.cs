@@ -22,6 +22,8 @@ public class CombatController : StateMachine
     [HideInInspector] public HeroTurnState HeroTurnState;
     [HideInInspector] public PauseState PauseState;
     [HideInInspector] public MovingState MovingState;
+    [HideInInspector] public WinState WinState;
+    [HideInInspector] public LossState LossState;
 
 
     #endregion
@@ -63,6 +65,8 @@ public class CombatController : StateMachine
         HeroTurnState = new HeroTurnState(this);
         PauseState = new PauseState(this);
         MovingState = new MovingState(this);
+        WinState = new WinState(this);
+        LossState = new LossState(this);
 
         SelectedHeroSlot = SelectedEnemySlot = -1;
     }

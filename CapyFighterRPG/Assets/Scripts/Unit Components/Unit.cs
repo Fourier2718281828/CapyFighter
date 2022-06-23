@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 
 public class Unit : MonoBehaviour
 {
@@ -18,9 +17,29 @@ public class Unit : MonoBehaviour
 
     private void OnEnable()
     {
-        _fighter.OnAttacked         += _ => _animator.Play("Attack");
-        _fighter.OnDamageReceived   += (p, d) => _animator.Play("Hurt");
-        _fighter.OnSuperAttacked    += _ => _animator.Play("SuperAttack");
+        _fighter.OnAttacked += _ => _animator.Play("Attack");
+        //_fighter.OnDamageReceived += (p, d) =>
+        //{
+        //    if(_animator.GetBool("IsShielded"))
+        //        _animator.Play("ShieldHurt");
+        //    else
+        //        _animator.Play("Hurt");
+        //};
+        _fighter.OnSuperAttacked += _ => _animator.Play("SuperAttack");
+        _fighter.OnShieldEquiped += () =>
+        {
+            _animator.Play("ShieldEquipping");
+            _animator.SetBool("IsShielded", true);
+        };
+
+        _fighter.OnShieldBroken += () =>
+        {
+            _animator.Play("ShieldBreaking");
+            _animator.SetBool("IsShielded", false);
+        };
+
+        _fighter.ShieldHurtAnimation += () => _animator.Play("Hurt");
+        _fighter.HurtAnimation += () => _animator.Play("ShieldHurt");
     }
     #endregion
 

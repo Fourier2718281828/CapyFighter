@@ -9,13 +9,23 @@ public class EnemyAI : MonoBehaviour
     private List<AIObject> _enemyList;
     private List<Task> _taskList;
 
+    [Header("Weights for enemy factors")]
     [SerializeField] private float _possibleDamageWeight;
     [SerializeField] private float _possibleHPSaveWeight;
     [SerializeField] private float _possibleMPCostWeight;
 
+    [Header("Weights for hero factors")]
+    [SerializeField] private float _heroHPWeight;
+    [SerializeField] private float _heroMPWeight;
+
     public float PossibleDamageWeight => _possibleDamageWeight;
     public float PossibleHPSaveWeight => _possibleHPSaveWeight;
     public float PossibleMPCostWeight => _possibleMPCostWeight;
+    public float HeroHPWeight => _heroHPWeight;
+    public float HeroMPWeight => _heroMPWeight;
+    public List<AIObject> Heros => _heroList;
+    public List<AIObject> Enemies => _enemyList;
+
 
 
     private void Awake()
@@ -61,17 +71,17 @@ public class EnemyAI : MonoBehaviour
 
     private void GatherTasks()
     {
-        _taskList.Add(new Task(Task.TaskType.SkipTurn));
+        _taskList.Add(new Task(this, Task.TaskType.SkipTurn));
 
         foreach(var hero in _heroList)
         {
-            _taskList.Add(new Task(Task.TaskType.Attack, hero));
-            _taskList.Add(new Task(Task.TaskType.SuperAttack, hero));
+            _taskList.Add(new Task(this, Task.TaskType.Attack, hero));
+            _taskList.Add(new Task(this, Task.TaskType.SuperAttack, hero));
         }
 
         foreach (var enemy in _enemyList)
         {
-            _taskList.Add(new Task(Task.TaskType.EquipShield));
+            _taskList.Add(new Task(this, Task.TaskType.EquipShield));
         }
     }
 

@@ -33,6 +33,9 @@ public class EnemyTurnState : PausableState
 
         Task taskToDo = _enemyAI.NextTurnTask();
         taskToDo.Do();
-        _controller.SwitchState(_controller.HeroTurnState);
+        if (_controller.HeroCount == 0)
+            _controller.SwitchState(_controller.LossState);
+        else
+            _controller.SwitchState(_controller.HeroTurnState);
     }
 }

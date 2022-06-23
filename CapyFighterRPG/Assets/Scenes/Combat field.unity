@@ -920,10 +920,10 @@ MonoBehaviour:
   _heroSlots:
   - {fileID: 11400000, guid: e2466f7c9e4e05b48a4f02eff3f3fd05, type: 2}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
-  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
+  - {fileID: 11400000, guid: e2466f7c9e4e05b48a4f02eff3f3fd05, type: 2}
   _enemySlots:
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: e2466f7c9e4e05b48a4f02eff3f3fd05, type: 2}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
 --- !u!114 &1307390678
 MonoBehaviour:
@@ -977,8 +977,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _possibleDamageWeight: 1
-  _possibleHPSaveWeight: 1.5
+  _possibleHPSaveWeight: 1.2
   _possibleMPCostWeight: -0.5
+  _heroHPWeight: 1.2
+  _heroMPWeight: 0.5
 --- !u!1 &1462676589
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,12 +1,15 @@
 ﻿using System;
+using UnityEngine;
 
 public class Task
 {
-    //private int _priorityModifier;
+    private EnemyAI _enemyAI;
+
     private AIObject _taskDoer;
     private AIObject _target;
     private TaskType _type;
     private bool _isAssigned;
+    private Fighter _targetFighter;
 
     public int Priority { get; private set; }
     public AIObject TaskDoer => _taskDoer;
@@ -23,11 +26,13 @@ public class Task
         SuperAttack,
     }
 
-    public Task(TaskType taskType, AIObject target = null)
+    public Task(EnemyAI enemyAI, TaskType taskType, AIObject target = null)
     {
+        _enemyAI = enemyAI;
         _type = taskType;
         Priority = (int)taskType;
         _isAssigned = false;
+        _targetFighter = target?.GetComponent<Fighter>();
 
         switch (taskType)
         {
@@ -82,5 +87,42 @@ public class Task
 
     public bool IsAssigned() => _isAssigned;
 
-    public int PriorityModifier() => 0;
+    public float PriorityMultiplier()
+    {
+        switch(Type)
+        {
+            case TaskType.Attack:
+                return AttackPriorityMultiplier();
+            case TaskType.SuperAttack:
+                return AttackPriorityMultiplier();
+            case TaskType.EquipShield:
+                return ShieldEquipPriorityMultiplier();
+            case TaskType.Move:
+                return 1f;
+            case TaskType.SkipTurn:
+                return 1f;
+            default:
+                return 1f;
+        }
+    }
+
+    private float AttackPriorityMultiplier()
+    {
+        var weightedHPComponent = _enemyAI.HeroHPWeight * _targetFighter.HPPercentage();
+        var weightedMPComponent = _enemyAI.HeroMPWeight * _targetFighter.MPPercentage();
+        var weighter = _enemyAI.HeroHPWeight + _enemyAI.HeroMPWeight;
+        var weighted = (weightedHPComponent + weightedMPComponent) / weighter;
+        return 1f + weighted;
+    }
+
+    private float ShieldEquipPriorityMultiplier()
+    {
+        //var maxPossibleDamageToReceive = 0;
+        //int currHeroDamage;
+        //foreach(var hero in _enemyAI.Heros)
+        //{
+        //    currHeroDamage = Mathf.Max(hero.Fighter.GetAttackDamageTo())
+        //}
+        return 1.5f;
+    }
 }

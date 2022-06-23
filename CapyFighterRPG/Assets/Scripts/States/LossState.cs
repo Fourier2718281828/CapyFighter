@@ -15,13 +15,13 @@ public class LossState : State
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Pause Entered");
+        Debug.Log("Loss");
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        Debug.Log("Pause Exited");
+        Debug.Log("Loss Exited");
     }
 
     public override void UpdateLogic()
