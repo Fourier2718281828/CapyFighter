@@ -977,9 +977,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _possibleDamageWeight: 1
-  _possibleHPSaveWeight: 1.2
+  _possibleHPSaveWeight: 1.5
   _possibleMPCostWeight: -0.5
-  _heroHPWeight: 1.2
+  _heroHPWeight: 1.25
   _heroMPWeight: 0.5
 --- !u!1 &1462676589
 GameObject:

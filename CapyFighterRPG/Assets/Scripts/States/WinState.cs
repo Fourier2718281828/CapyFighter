@@ -3,36 +3,31 @@
 public class WinState : State
 {
     private readonly CombatController _controller;
-    private readonly PauseShower _pauseShower;
+    private readonly VictoryCanvasShower _victoryShower;
 
     public WinState(StateMachine stateMachine)
         : base(stateMachine)
     {
         _controller = (CombatController)stateMachine;
-        _pauseShower = _controller.GetComponent<PauseShower>();
+        _victoryShower = _controller.GetComponent<VictoryCanvasShower>();
     }
 
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Pause Entered");
+        Debug.Log("WinState Entered");
+        _victoryShower.ShowVictoryCanvas();
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        Debug.Log("Pause Exited");
+        Debug.Log("WinState Exited");
+        _victoryShower.HideVictoryCanvas();
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            _pauseShower.HidePause();
-            _controller.UnpauseCombat();
-            _stateMachine.SwitchToPreviousState();
-        }
     }
 }

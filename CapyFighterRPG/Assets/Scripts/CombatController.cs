@@ -12,8 +12,8 @@ public class CombatController : StateMachine
     private Dictionary<GameObject, int> _enemiesToSlots;
     private Dictionary<GameObject, Fighter> _herosToFighters;
     private Dictionary<GameObject, Fighter> _enemiesToFighters;
-    private int _selectedHeroSlot;
-    private int _selectedEnemySlot;
+    [SerializeField] private int _selectedHeroSlot;
+    [SerializeField] private int _selectedEnemySlot;
 
     [SerializeField] private float _turnDurationSeconds;
     [SerializeField] private Camera _mainCamera;

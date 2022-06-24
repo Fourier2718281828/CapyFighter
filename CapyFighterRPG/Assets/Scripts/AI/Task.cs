@@ -10,6 +10,8 @@ public class Task
     private TaskType _type;
     private bool _isAssigned;
     private Fighter _targetFighter;
+    private float[] _factorValues;
+    private float[] _factorWeights;
 
     public int Priority { get; private set; }
     public AIObject TaskDoer => _taskDoer;
@@ -33,6 +35,7 @@ public class Task
         Priority = (int)taskType;
         _isAssigned = false;
         _targetFighter = target?.GetComponent<Fighter>();
+        FillFactorArrays();
 
         switch (taskType)
         {
@@ -51,6 +54,47 @@ public class Task
             default:
                 throw new InvalidOperationException("No such task type.");
         }
+    }
+
+    private void FillFactorArrays()
+    {
+        _factorValues = new float[]
+        {
+            TargetHPSaturation(),
+            TargetMPSaturation(),
+        };
+
+        _factorWeights = new float[]
+        {
+            _enemyAI.HeroHPWeight,
+            _enemyAI.HeroMPWeight,
+        };
+    }
+
+    private float TargetHPSaturation()
+    {
+        return Type switch
+        {
+            TaskType.Attack => _targetFighter.HPPercentage(),
+            TaskType.SuperAttack => _targetFighter.HPPercentage(),
+            TaskType.EquipShield => 0f,
+            TaskType.Move => 0f,
+            TaskType.SkipTurn => 0f,
+            _ => throw new InvalidOperationException("No such task type."),
+        };
+    }
+
+    private float TargetMPSaturation()
+    {
+        return Type switch
+        {
+            TaskType.Attack => _targetFighter.MPPercentage(),
+            TaskType.SuperAttack => _targetFighter.MPPercentage(),
+            TaskType.EquipShield => 0f,
+            TaskType.Move => 0f,
+            TaskType.SkipTurn => 0f,
+            _ => throw new InvalidOperationException("No such task type."),
+        };
     }
 
     public void Do()
@@ -89,21 +133,15 @@ public class Task
 
     public float PriorityMultiplier()
     {
-        switch(Type)
+        var res = 0f;
+        var sumOfWeights = 0f;
+        for (int i = 0; i < _factorValues.Length; ++i)
         {
-            case TaskType.Attack:
-                return AttackPriorityMultiplier();
-            case TaskType.SuperAttack:
-                return AttackPriorityMultiplier();
-            case TaskType.EquipShield:
-                return ShieldEquipPriorityMultiplier();
-            case TaskType.Move:
-                return 1f;
-            case TaskType.SkipTurn:
-                return 1f;
-            default:
-                return 1f;
+            res += _factorWeights[i] * _factorValues[i];
+            sumOfWeights += _factorWeights[i];
         }
+
+        return 1f + res / sumOfWeights;
     }
 
     private float AttackPriorityMultiplier()
@@ -116,7 +154,7 @@ public class Task
     }
 
     private float ShieldEquipPriorityMultiplier()
-    {
+    { 
         //var maxPossibleDamageToReceive = 0;
         //int currHeroDamage;
         //foreach(var hero in _enemyAI.Heros)

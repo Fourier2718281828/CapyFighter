@@ -37,14 +37,22 @@ public class PossibleAssignment : IComparable<PossibleAssignment>
     }
 
     private float EvaluateScore()
+        => TaskToDo.Priority * 
+        TaskToDo.PriorityMultiplier() * 
+        this.PriorityMultiplier();
+    
+
+    private float PriorityMultiplier()
     {
-        float res = TaskToDo.Priority;
+        var res = 0f;
+        var sumOfWeights = 0f;
         for(int i = 0; i < _factorValues.Length; ++i)
         {
             res += _factorWeights[i] * _factorValues[i];
+            sumOfWeights += _factorWeights[i];
         }
 
-        return res * TaskToDo.PriorityMultiplier();
+        return res / sumOfWeights;
     }
 
     private void FillTheArrayOfFactors()

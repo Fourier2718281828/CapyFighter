@@ -18,8 +18,9 @@ public class HeroTurnState : PausableState
     {
         base.EnterState();
         _theTurnIsUsed = false;
+        _controller.RefreshSelectedSlots();
 
-        foreach(var fighter in _controller.HerosToFighters.Values)
+        foreach (var fighter in _controller.HerosToFighters.Values)
         {
             fighter.RegainMana();
         }
@@ -89,7 +90,6 @@ public class HeroTurnState : PausableState
                 _controller.SwitchStateInSeconds(_controller.WinState, _controller.TurnDurationSeconds);
             else
                 _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
-            _controller.RefreshSelectedSlots();
             _theTurnIsUsed = true;
         }
         else
@@ -110,7 +110,6 @@ public class HeroTurnState : PausableState
                 _controller.SwitchStateInSeconds(_controller.WinState, _controller.TurnDurationSeconds);
             else
                 _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
-            _controller.RefreshSelectedSlots();
             _theTurnIsUsed = true;
         }
         else
@@ -126,7 +125,6 @@ public class HeroTurnState : PausableState
         {
             fighterToGetEquiped.EquipShield();
             _controller.SwitchStateInSeconds(_controller.EnemyTurnState, _controller.TurnDurationSeconds);
-            _controller.RefreshSelectedSlots();
             _theTurnIsUsed = true;
         }
         else
