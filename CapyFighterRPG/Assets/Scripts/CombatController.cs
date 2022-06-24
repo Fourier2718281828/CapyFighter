@@ -12,10 +12,14 @@ public class CombatController : StateMachine
     private Dictionary<GameObject, int> _enemiesToSlots;
     private Dictionary<GameObject, Fighter> _herosToFighters;
     private Dictionary<GameObject, Fighter> _enemiesToFighters;
+    [Header("Debugging")]
     [SerializeField] private int _selectedHeroSlot;
     [SerializeField] private int _selectedEnemySlot;
-
+    [Header("Durations")]
+    [SerializeField] private float _messageUnfadeDuration;
+    [SerializeField] private float _messageFadeDuration;
     [SerializeField] private float _turnDurationSeconds;
+    [Header("Camera of the game")]
     [SerializeField] private Camera _mainCamera;
 
     [HideInInspector] public EnemyTurnState EnemyTurnState;
@@ -24,12 +28,12 @@ public class CombatController : StateMachine
     [HideInInspector] public MovingState MovingState;
     [HideInInspector] public WinState WinState;
     [HideInInspector] public LossState LossState;
-
-
     #endregion
 
     #region Properties
     public float TurnDurationSeconds => _turnDurationSeconds;
+    public float MessageFadeDuration =>_messageFadeDuration;
+    public float MessageUnfadeDuration => _messageUnfadeDuration;
     public Dictionary<GameObject, int> HerosToSlots => _herosToSlots;
     public Dictionary<GameObject, int> EnemiesToSlots => _enemiesToSlots;
     public Dictionary<GameObject, Fighter> HerosToFighters => _herosToFighters;

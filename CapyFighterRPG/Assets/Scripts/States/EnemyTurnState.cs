@@ -2,19 +2,25 @@
 {
     private readonly CombatController _controller;
     private readonly EnemyAI _enemyAI;
+    private readonly MessageTextShower _messageTextShower;
     private bool _theTurnIsUsed;
+
+    private bool IsFaded => _messageTextShower.IsFaded;
+
 
     public EnemyTurnState(CombatController stateMachine)
         : base(stateMachine)
     {
         _controller = stateMachine;
         _enemyAI = _controller.GetComponent<EnemyAI>();
+        _messageTextShower = _controller.GetComponent<MessageTextShower>();
         _theTurnIsUsed = true;
     }
 
     public override void EnterState()
     {
         base.EnterState();
+        _messageTextShower.ShowMessage("Enemy's Turn", _controller.MessageUnfadeDuration, _controller.MessageFadeDuration);
         _theTurnIsUsed = false;
 
         foreach (var fighter in _controller.EnemiesToFighters.Values)
@@ -33,7 +39,7 @@
     {
         base.UpdateLogic();
 
-        if (_theTurnIsUsed) return;
+        if (_theTurnIsUsed || !IsFaded) return;
 
         Task taskToDo = _enemyAI.NextTurnTask();
         taskToDo.Do();

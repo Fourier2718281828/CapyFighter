@@ -4,14 +4,21 @@ public class HeroTurnState : PausableState
 {
     private readonly CombatController _controller;
     private readonly Spawner _spawner;
+    private readonly MessageTextShower _messageTextShower;
+    private readonly ControlSet _controlSet;
     private bool _theTurnIsUsed;
 
+    private bool IsFaded => _messageTextShower.IsFaded;
     public HeroTurnState(CombatController stateMachine)
         : base(stateMachine)
     {
         _controller = stateMachine;
         _spawner = _controller.GetComponent<Spawner>();
+        _messageTextShower = _controller.GetComponent<MessageTextShower>();
+        _controlSet = _controller.GetComponent<ControlSet>();
         _theTurnIsUsed = true;
+
+        SubscribeEventsToControls();
     }
 
     public override void EnterState()
@@ -19,6 +26,7 @@ public class HeroTurnState : PausableState
         base.EnterState();
         _theTurnIsUsed = false;
         _controller.RefreshSelectedSlots();
+        _messageTextShower.ShowMessage("Your Turn", _controller.MessageUnfadeDuration, _controller.MessageFadeDuration);
 
         foreach (var fighter in _controller.HerosToFighters.Values)
         {
@@ -35,7 +43,7 @@ public class HeroTurnState : PausableState
     {
         base.UpdateLogic();
 
-        if (_theTurnIsUsed) return;
+        if (_theTurnIsUsed || !IsFaded) return;
 
         if (!_controller.IsHeroSlotSelected()) return;
 
@@ -76,6 +84,15 @@ public class HeroTurnState : PausableState
         {
             SuperAttack();
         }
+    }
+
+    private void SubscribeEventsToControls()
+    {
+        _controlSet.AttackButton.onClick.AddListener(() => Attack());
+        _controlSet.SuperAttackButton.onClick.AddListener(() => SuperAttack());
+        _controlSet.EquipShieldButton.onClick.AddListener(() => EquipShield());
+        _controlSet.MoveUpButton.onClick.AddListener(() => MoveUp());
+        _controlSet.MoveDownButton.onClick.AddListener(() => MoveDown());
     }
 
     private void Attack()
