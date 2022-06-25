@@ -37,14 +37,22 @@ public class PossibleAssignment : IComparable<PossibleAssignment>
     }
 
     private float EvaluateScore()
+        => TaskToDo.Priority * 
+        TaskToDo.PriorityMultiplier() * 
+        this.PriorityMultiplier();
+    
+
+    private float PriorityMultiplier()
     {
-        float res = TaskToDo.Priority + TaskToDo.PriorityModifier();
+        var res = 0f;
+        var sumOfWeights = 0f;
         for(int i = 0; i < _factorValues.Length; ++i)
         {
             res += _factorWeights[i] * _factorValues[i];
+            sumOfWeights += _factorWeights[i];
         }
 
-        return res;
+        return res / sumOfWeights;
     }
 
     private void FillTheArrayOfFactors()
@@ -58,9 +66,9 @@ public class PossibleAssignment : IComparable<PossibleAssignment>
 
         _factorWeights = new float[]
         {
-            _enemyAI.PossibleDamageWeight,
-            _enemyAI.PossibleHPSaveWeight,
-            _enemyAI.PossibleMPCostWeight,
+            _enemyAI.PossibleDamageWeight * DamageImportanceMultiplier(),
+            _enemyAI.PossibleHPSaveWeight * HPImportanceMultiplier(),
+            _enemyAI.PossibleMPCostWeight * MPImportanceMultiplier(),
         };
 
         if (_factorValues.Length != _factorValues.Length)
@@ -106,6 +114,21 @@ public class PossibleAssignment : IComparable<PossibleAssignment>
             Task.TaskType.SkipTurn => 0f,
             _ => 0f
         };
+    }
+
+    private float DamageImportanceMultiplier()
+    {
+        return 1f;
+    }
+
+    private float HPImportanceMultiplier()
+    {
+        return (1f - _fighter.HPPercentage());
+    }
+
+    private float MPImportanceMultiplier()
+    {
+        return (1f - _fighter.MPPercentage());
     }
 
     public int CompareTo(PossibleAssignment other)
