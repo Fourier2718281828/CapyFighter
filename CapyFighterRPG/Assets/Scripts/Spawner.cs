@@ -30,6 +30,10 @@ public class Spawner : MonoBehaviour
     [Header("Enemies at slots (not all slots have to be filled)")]
     [SerializeField] private UnitData[] _enemySlots;
 
+    [Header("Debug")]
+    [SerializeField] private GameObject _debugPoint;
+    [SerializeField] private bool _debugEnabled;
+
     private Vector3[] _heroSlotPositions;
     private Vector3[] _enemySlotPositions;
 
@@ -62,8 +66,11 @@ public class Spawner : MonoBehaviour
         if (HeroSlots[slot] == null)
             throw new InvalidOperationException($"Trying to instantiate a hero at an empty slot : {slot}");
 
+        Vector3 position = _heroSlotPositions[slot];
+        position.y += HeroSlots[slot].OffsetY;
+
         GameObject spawned =
-            Instantiate(_unitPrefab, _heroSlotPositions[slot], Quaternion.identity, _unitContainer.transform);
+            Instantiate(_unitPrefab, position, Quaternion.identity, _unitContainer.transform);
 
         spawned.GetComponent<Unit>().Init(HeroSlots[slot]);
         spawned.GetComponent<SpriteRenderer>().flipX = false;
@@ -79,8 +86,11 @@ public class Spawner : MonoBehaviour
         if (EnemySlots[slot] == null)
             throw new InvalidOperationException($"Trying to instantiate an enemy at an empty slot : {slot}");
 
+        Vector3 position = _enemySlotPositions[slot];
+        position.y += EnemySlots[slot].OffsetY;
+
         GameObject spawned =
-            Instantiate(_unitPrefab, _enemySlotPositions[slot], Quaternion.identity, _unitContainer.transform);
+            Instantiate(_unitPrefab, position, Quaternion.identity, _unitContainer.transform);
 
         spawned.GetComponent<Unit>().Init(EnemySlots[slot]);
         spawned.GetComponent<SpriteRenderer>().flipX = true;
@@ -104,6 +114,8 @@ public class Spawner : MonoBehaviour
 
         _heroSlotPositions = grid.CalculateCellCentres();
 
+        SetDebugPointBoundaries(grid);
+
         grid = new VectorGrid
             (
             _enemyOrigin,
@@ -115,6 +127,8 @@ public class Spawner : MonoBehaviour
 
         _enemySlotPositions = grid.CalculateCellCentres();
 
+        SetDebugPointBoundaries(grid);
+        DebugPointSettings();
     }
 
     private int GetSlotRowsCount(int totalSlotCount, int maxRowCount)
@@ -137,5 +151,38 @@ public class Spawner : MonoBehaviour
                     "at least one column is filled.");
             return totalSlotCount / maxRowCount;
         }
+    }
+
+    private void DebugPointSettings()
+    {
+        if (_debugEnabled)
+        {
+            foreach (var position in _heroSlotPositions)
+            {
+                SetDebugPoint(position);
+            }
+
+            foreach (var position in _enemySlotPositions)
+            {
+                SetDebugPoint(position);
+            }
+        }
+    }
+
+    private void SetDebugPointBoundaries(VectorGrid grid)
+    {
+        if(_debugEnabled)
+        {
+            SetDebugPoint(grid.Origin);
+            SetDebugPoint(grid.OriginsNeighbour);
+            SetDebugPoint(grid.DiagonalToOrigin);
+            SetDebugPoint(grid.OtherNeighbour);
+        }
+    }
+
+    private void SetDebugPoint(Vector3 position)
+    {
+        GameObject point = Instantiate(_debugPoint);
+        point.transform.position = position;
     }
 }
