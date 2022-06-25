@@ -23,3 +23,11 @@ MonoBehaviour:
   _maxShieldHP: 45
   _shieldManaCost: 20
   _manaRegainRate: 5
+  _attackSound: {fileID: 0}
+  _superAttackSound: {fileID: 0}
+  _shieldEquipedSound: {fileID: 0}
+  _shieldBrokenSound: {fileID: 0}
+  _shieldHurtSound: {fileID: 0}
+  _movingSound: {fileID: 0}
+  _hurtSound: {fileID: 8300000, guid: adc01c54b307ab64a872c1ac4c87efa6, type: 3}
+  _dieSound: {fileID: 0}

@@ -144,7 +144,7 @@ public class CombatController : StateMachine
         {
             pair.Value.OnDied += () =>
             {
-                SelectedHeroSlot = -1;
+                RefreshSelectedSlots();
                 _hud.FightersToUnitInfos.Remove(pair.Value);
                 HerosToSlots.Remove(pair.Key);
                 HerosToFighters.Remove(pair.Key);
@@ -156,7 +156,7 @@ public class CombatController : StateMachine
         {
             pair.Value.OnDied += () =>
             {
-                SelectedHeroSlot = -1;
+                RefreshSelectedSlots();
                 _hud.FightersToUnitInfos.Remove(pair.Value);
                 EnemiesToSlots.Remove(pair.Key);
                 EnemiesToFighters.Remove(pair.Key);
@@ -173,6 +173,7 @@ public class CombatController : StateMachine
             mover = pair.Key.GetComponent<Mover>();
             mover.OnMoving += index =>
             {
+                _spawner.HeroPlatformFaders[SelectedHeroSlot].Unfade();
                 HerosToSlots[pair.Key] = index;
                 SelectedHeroSlot = index;
             };
@@ -183,6 +184,7 @@ public class CombatController : StateMachine
             mover = pair.Key.GetComponent<Mover>();
             mover.OnMoving += index =>
             {
+                _spawner.EnemyPlatformFaders[SelectedEnemySlot].Unfade();
                 EnemiesToSlots[pair.Key] = index;
                 SelectedEnemySlot = index;
             };
@@ -208,13 +210,37 @@ public class CombatController : StateMachine
             return;
         }
 
+        //try
+        //{
+        //    if(SelectedHeroSlot != -1)
+        //        _spawner.HeroPlatformFaders[SelectedHeroSlot].Unfade();
+        //    SelectedHeroSlot = GetHeroSlot(detectedCollider.gameObject);
+        //    _spawner.HeroPlatformFaders[SelectedHeroSlot].Fade();
+        //}
+        //catch (InvalidOperationException)
+        //{
+        //    if (SelectedEnemySlot != -1)
+        //        _spawner.EnemyPlatformFaders[SelectedEnemySlot].Unfade();
+        //    SelectedEnemySlot = GetEnemySlot(detectedCollider.gameObject);
+        //    _spawner.EnemyPlatformFaders[SelectedEnemySlot].Fade();
+        //}
+        int selectedSlot;
+
         try
         {
-            SelectedHeroSlot = GetHeroSlot(detectedCollider.gameObject);
+            selectedSlot = GetHeroSlot(detectedCollider.gameObject);
+            if (SelectedHeroSlot != -1)
+                _spawner.HeroPlatformFaders[SelectedHeroSlot].Unfade();
+            SelectedHeroSlot = selectedSlot;
+            _spawner.HeroPlatformFaders[SelectedHeroSlot].Fade();
         }
         catch (InvalidOperationException)
         {
-            SelectedEnemySlot = GetEnemySlot(detectedCollider.gameObject);
+            selectedSlot = GetEnemySlot(detectedCollider.gameObject);
+            if (SelectedEnemySlot != -1)
+                _spawner.EnemyPlatformFaders[SelectedEnemySlot].Unfade();
+            SelectedEnemySlot = selectedSlot;
+            _spawner.EnemyPlatformFaders[SelectedEnemySlot].Fade();
         }
     }
 
@@ -301,7 +327,39 @@ public class CombatController : StateMachine
 
     public void RefreshSelectedSlots()
     {
-        SelectedHeroSlot = SelectedEnemySlot = -1;
+        //if(SelectedHeroSlot != -1)
+        //{
+        //    _spawner.HeroPlatformFaders[SelectedHeroSlot].Unfade();
+        //}
+
+        //if(SelectedEnemySlot != -1)
+        //{
+        //    _spawner.EnemyPlatformFaders[SelectedEnemySlot].Unfade();
+        //}
+
+        //SelectedHeroSlot = SelectedEnemySlot = -1;
+        RefreshHeroSelectedSlot();
+        RefreshEnemySelectedSlot();
+    }
+
+    public void RefreshHeroSelectedSlot()
+    {
+        if (SelectedHeroSlot != -1)
+        {
+            _spawner.HeroPlatformFaders[SelectedHeroSlot].Unfade();
+        }
+
+        SelectedHeroSlot = -1;
+    }
+
+    public void RefreshEnemySelectedSlot()
+    {
+        if (SelectedEnemySlot != -1)
+        {
+            _spawner.EnemyPlatformFaders[SelectedEnemySlot].Unfade();
+        }
+
+        SelectedEnemySlot = -1;
     }
 
     public bool IsHeroSlotSelected() => SelectedHeroSlot != -1;

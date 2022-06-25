@@ -6,6 +6,8 @@ public class Unit : MonoBehaviour
     private UnitData _data;
     private Animator _animator;
     private Fighter _fighter;
+    private AudioSource _audioSource;
+    private Transform _transform;
 
     [SerializeField] private GameObject _damageCanvas;
     #endregion
@@ -15,33 +17,61 @@ public class Unit : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _fighter = GetComponent<Fighter>();
-    }
-
-    private void Start()
-    {
-        Vector3 position = _damageCanvas.transform.position;
-        position.y -= _data.OffsetY;
-        _damageCanvas.transform.position = position;
+        _audioSource = GetComponent<AudioSource>();
+        _transform = GetComponent<Transform>();
     }
 
     private void OnEnable()
     {
-        _fighter.OnAttacked += _ => _animator.Play("Attack");
-        _fighter.OnSuperAttacked += _ => _animator.Play("SuperAttack");
+        _fighter.OnAttacked += _ =>
+        {
+            _animator.Play("Attack");
+            _audioSource.clip = _data.AttackSound;
+            _audioSource.Play();
+        };
+
+        _fighter.OnSuperAttacked += _ =>
+        {
+            _animator.Play("SuperAttack");
+            _audioSource.clip = _data.SuperAttackSound;
+            _audioSource.Play();
+        };
+
         _fighter.OnShieldEquiped += () =>
         {
             _animator.Play("ShieldEquipping");
             _animator.SetBool("IsShielded", true);
+            _audioSource.clip = _data.ShieldEquipedSound;
+            _audioSource.Play();
         };
 
         _fighter.OnShieldBroken += () =>
         {
             _animator.Play("ShieldBreaking");
             _animator.SetBool("IsShielded", false);
+            _audioSource.clip = _data.ShieldBrokenSound;
+            _audioSource.Play();
         };
 
-        _fighter.ShieldHurtAnimation += () => _animator.Play("Hurt");
-        _fighter.HurtAnimation += () => _animator.Play("ShieldHurt");
+        _fighter.ShieldHurtAnimation += () =>
+        {
+            _animator.Play("ShieldHurt");
+            _audioSource.clip = _data.ShieldHurtSound;
+            _audioSource.Play();
+        };
+
+        _fighter.HurtAnimation += () =>
+        {
+            _animator.Play("Hurt");
+            _audioSource.clip = _data.HurtSound;
+            _audioSource.Play();
+        };
+
+        _fighter.OnDied += () =>
+        {
+            _audioSource.clip = _data.DieSound;
+            _audioSource.Play();
+        };
     }
     #endregion
 

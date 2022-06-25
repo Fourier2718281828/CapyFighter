@@ -823,7 +823,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0c9edc68816f85f4895ea12442424b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0c9edc68816f85f4895ea12442424b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1239,7 +1239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8962264, g: 0.89115345, b: 0.89115345, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2117,12 +2117,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitInfoPrefab: {fileID: 8723731795093089047, guid: b364253d42782834eac7cd8579dd6051, type: 3}
   _hudCanvas: {fileID: 1763370410}
-  _heroOrigin: {x: -17, y: 7, z: 0}
-  _heroOriginsNeighbour: {x: -3, y: 7, z: 0}
-  _heroDiagonalToOrigin: {x: -3, y: 3, z: 0}
-  _enemyOrigin: {x: 17, y: 7, z: 0}
-  _enemyOriginsNeighbour: {x: 3, y: 7, z: 0}
-  _enemyDiagonalToOrigin: {x: 3, y: 3, z: 0}
+  _heroOrigin: {x: -20, y: 9, z: 0}
+  _heroOriginsNeighbour: {x: -10, y: 9, z: 0}
+  _heroDiagonalToOrigin: {x: -10, y: 5, z: 0}
+  _enemyOrigin: {x: 20, y: 9, z: 0}
+  _enemyOriginsNeighbour: {x: 3, y: 9, z: 0}
+  _enemyDiagonalToOrigin: {x: 3, y: 5, z: 0}
 --- !u!114 &1307390677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2139,16 +2139,16 @@ MonoBehaviour:
   _unitContainer: {fileID: 1462676589}
   _maxHeroRowCount: 3
   _maxEnemyRowCount: 3
-  _heroOrigin: {x: -9, y: -8, z: 0}
+  _heroOrigin: {x: -9, y: -7, z: 0}
   _heroOriginsNeighbour: {x: -1, y: 0, z: 0}
   _heroDiagonalToOrigin: {x: -11, y: 0, z: 0}
-  _enemyOrigin: {x: 9, y: -8, z: 0}
+  _enemyOrigin: {x: 9, y: -7, z: 0}
   _enemyOriginsNeighbour: {x: 1, y: 0, z: 0}
   _enemyDiagonalToOrigin: {x: 11, y: 0, z: 0}
   _heroSlots:
+  - {fileID: 0}
   - {fileID: 11400000, guid: e2466f7c9e4e05b48a4f02eff3f3fd05, type: 2}
-  - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
-  - {fileID: 11400000, guid: e2466f7c9e4e05b48a4f02eff3f3fd05, type: 2}
+  - {fileID: 0}
   _enemySlots:
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
   - {fileID: 11400000, guid: 53df809c5a1774340807d5d6c669b37c, type: 2}
@@ -2558,7 +2558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8962264, g: 0.89115345, b: 0.89115345, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3142,7 +3142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8962264, g: 0.89115345, b: 0.89115345, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3546,7 +3546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8962264, g: 0.89115345, b: 0.89115345, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3694,7 +3694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8962264, g: 0.89115345, b: 0.89115345, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

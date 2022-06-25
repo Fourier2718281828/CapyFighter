@@ -1,25 +1,22 @@
 fileFormatVersion: 2
-guid: 71b3c644afc0ba0418dea4089b79923a
+guid: a82ff188b95d82a4fac4e8c75c9415bb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3743685237786632119
-    second: takenHitEnemy_0
+      213: 6481637430868067876
+    second: takeOff_0
   - first:
-      213: -2853137778156073521
-    second: takenHitEnemy_1
+      213: -8423140553071920621
+    second: takeOff_1
   - first:
-      213: 2200765860807138446
-    second: takenHitEnemy_2
+      213: 1034609609161343976
+    second: takeOff_2
   - first:
-      213: 8208351021619431089
-    second: takenHitEnemy_3
+      213: -6010996686184341236
+    second: takeOff_3
   - first:
-      213: -4431730817241843050
-    second: takenHitEnemy_4
-  - first:
-      213: -6812853586644065801
-    second: takenHitEnemy_5
+      213: -380781517331731704
+    second: takeOff_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -121,127 +118,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: takenHitEnemy_0
+      name: takeOff_0
       rect:
         serializedVersion: 2
         x: 0
         y: 789
         width: 252
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bf552d83ed34f330800000000000000
-      internalID: 3743685237786632119
+      spriteID: 42644c5f6e663f950800000000000000
+      internalID: 6481637430868067876
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: takenHitEnemy_1
+      name: takeOff_1
       rect:
         serializedVersion: 2
         x: 252
         y: 789
         width: 252
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fcd82cdae4e9768d0800000000000000
-      internalID: -2853137778156073521
+      spriteID: 31af5f07b4efa1b80800000000000000
+      internalID: -8423140553071920621
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: takenHitEnemy_2
+      name: takeOff_2
       rect:
         serializedVersion: 2
         x: 504
         y: 789
         width: 252
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8c5737e3e0ba8e10800000000000000
-      internalID: 2200765860807138446
+      spriteID: 8e3844b35fbab5e00800000000000000
+      internalID: 1034609609161343976
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: takenHitEnemy_3
+      name: takeOff_3
       rect:
         serializedVersion: 2
         x: 756
         y: 789
         width: 252
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b64753b3cbe9e170800000000000000
-      internalID: 8208351021619431089
+      spriteID: c01aeed8c56a49ca0800000000000000
+      internalID: -6010996686184341236
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: takenHitEnemy_4
+      name: takeOff_4
       rect:
         serializedVersion: 2
         x: 1008
         y: 789
         width: 252
         height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 69af5225d445f72c0800000000000000
-      internalID: -4431730817241843050
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: takenHitEnemy_5
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 286
-        width: 252
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7f1a55d42c1e371a0800000000000000
-      internalID: -6812853586644065801
+      spriteID: 80b686a3a3137baf0800000000000000
+      internalID: -380781517331731704
       vertices: []
       indices: 
       edges: []

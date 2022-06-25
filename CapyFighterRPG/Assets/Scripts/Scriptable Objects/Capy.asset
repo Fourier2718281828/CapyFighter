@@ -14,13 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 9100000, guid: ba89769c03de3484d9f48160c9a744e4, type: 2}
   _avatarIcon: {fileID: 21300000, guid: 8143d62c37f1df34eb73b3b99a4c01b7, type: 3}
-  _offsetY: 1
   _maxHP: 100
   _maxMP: 100
   _attackDamage: 20
   _attackManaCost: 10
   _superAttackDamage: 40
   _superAttackManaCost: 40
-  _maxShieldHP: 25
+  _maxShieldHP: 50
   _shieldManaCost: 20
   _manaRegainRate: 5
+  _attackSound: {fileID: 8300000, guid: 959e2d2844889154e8d2a6c57bc7eca0, type: 3}
+  _superAttackSound: {fileID: 8300000, guid: 959e2d2844889154e8d2a6c57bc7eca0, type: 3}
+  _shieldEquipedSound: {fileID: 8300000, guid: b24167d23ca8bb84d99dbffeb2f1f265, type: 3}
+  _shieldBrokenSound: {fileID: 8300000, guid: b24167d23ca8bb84d99dbffeb2f1f265, type: 3}
+  _shieldHurtSound: {fileID: 8300000, guid: b24167d23ca8bb84d99dbffeb2f1f265, type: 3}
+  _movingSound: {fileID: 8300000, guid: b24167d23ca8bb84d99dbffeb2f1f265, type: 3}
+  _hurtSound: {fileID: 8300000, guid: b24167d23ca8bb84d99dbffeb2f1f265, type: 3}
+  _dieSound: {fileID: 8300000, guid: b24167d23ca8bb84d99dbffeb2f1f265, type: 3}

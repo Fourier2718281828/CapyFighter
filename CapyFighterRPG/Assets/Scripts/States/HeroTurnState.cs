@@ -53,48 +53,6 @@ public class HeroTurnState : PausableState
 
         if(!_controlSet.IsShown && IsFaded && !_theTurnIsUsed)
             _controlSet.Appear();
-
-        //if (_theTurnIsUsed || !IsFaded) return;
-        //if (!_controller.IsHeroSlotSelected()) return;
-
-
-        ////Moving
-        //if (Input.GetKeyDown(KeyCode.UpArrow))
-        //{
-        //    MoveUp();
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.DownArrow))
-        //{
-        //    MoveDown();
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.LeftArrow))
-        //{
-        //    MoveLeft();
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.RightArrow))
-        //{
-        //    MoveRight();
-        //}
-
-        ////Shield equipment
-        //if (Input.GetKey(KeyCode.D))
-        //{
-        //    EquipShield();
-        //}
-
-        //if (!_controller.AreSlotsSelected()) return;
-
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    Attack();
-        //}
-        //else if (Input.GetKey(KeyCode.S))
-        //{
-        //    SuperAttack();
-        //}
     }
 
     private void SubscribeEventsToControls()
