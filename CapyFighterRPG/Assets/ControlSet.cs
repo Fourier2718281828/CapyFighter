@@ -17,22 +17,6 @@ public class ControlSet : MonoBehaviour
     public Button EquipShieldButton => _equipShield;
     public Button SuperAttackButton => _superAttack;
 
-    //public event Action OnMoveUpClicked;
-    //public event Action OnMoveDownClicked;
-    //public event Action OnAttackClicked;
-    //public event Action OnEquipShieldClicked;
-    //public event Action OnSuperAttackClicked;
-
-
-    private void OnEnable()
-    {
-        //_moveUp.onClick.AddListener(() => OnMoveUpClicked?.Invoke());
-        //_moveUp.onClick.AddListener(() => OnMoveDownClicked?.Invoke());
-        //_moveUp.onClick.AddListener(() => OnAttackClicked?.Invoke());
-        //_moveUp.onClick.AddListener(() => OnEquipShieldClicked?.Invoke());
-        //_moveUp.onClick.AddListener(() => OnSuperAttackClicked?.Invoke());
-    }
-
     private void Appear() => _controlsCanvas.SetActive(true);
 
     private void Disappear() => _controlsCanvas.SetActive(false);

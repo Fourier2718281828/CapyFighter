@@ -9,7 +9,7 @@ public class MessageTextShower : MonoBehaviour
 
     public bool IsFaded { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
         _textCanvas.SetActive(true);
         _text.text = string.Empty;

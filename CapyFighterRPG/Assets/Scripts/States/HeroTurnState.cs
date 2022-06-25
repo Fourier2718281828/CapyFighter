@@ -18,12 +18,12 @@ public class HeroTurnState : PausableState
         _controlSet = _controller.GetComponent<ControlSet>();
         _theTurnIsUsed = true;
 
-        SubscribeEventsToControls();
     }
 
     public override void EnterState()
     {
         base.EnterState();
+        Debug.Log("Hero turn");
         _theTurnIsUsed = false;
         _controller.RefreshSelectedSlots();
         _messageTextShower.ShowMessage("Your Turn", _controller.MessageUnfadeDuration, _controller.MessageFadeDuration);
@@ -37,6 +37,7 @@ public class HeroTurnState : PausableState
     public override void ExitState()
     {
         base.ExitState();
+        Debug.Log("Hero turn exited");
     }
 
     public override void UpdateLogic()
@@ -47,8 +48,10 @@ public class HeroTurnState : PausableState
 
         if (!_controller.IsHeroSlotSelected()) return;
 
+        SubscribeEventsToControls();
+
         //Moving
-        if(Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             MoveUp();
         }
@@ -69,7 +72,7 @@ public class HeroTurnState : PausableState
         }
 
         //Shield equipment
-        if(Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             EquipShield();
         }
@@ -80,7 +83,7 @@ public class HeroTurnState : PausableState
         {
             Attack();
         }
-        else if(Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
             SuperAttack();
         }
@@ -88,6 +91,7 @@ public class HeroTurnState : PausableState
 
     private void SubscribeEventsToControls()
     {
+        _controlSet.AttackButton.onClick.RemoveAllListeners();
         _controlSet.AttackButton.onClick.AddListener(() => Attack());
         _controlSet.SuperAttackButton.onClick.AddListener(() => SuperAttack());
         _controlSet.EquipShieldButton.onClick.AddListener(() => EquipShield());
@@ -97,6 +101,7 @@ public class HeroTurnState : PausableState
 
     private void Attack()
     {
+        Debug.Log($"Selected slots : {_controller.SelectedHeroSlot}, {_controller.SelectedEnemySlot}");
         Fighter attackingFighter = _controller.GetHeroFighterAtSlot(_controller.SelectedHeroSlot);
 
         if (attackingFighter.CanAttack())

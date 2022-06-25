@@ -1,4 +1,6 @@
-﻿public class EnemyTurnState : PausableState
+﻿using UnityEngine;
+
+public class EnemyTurnState : PausableState
 {
     private readonly CombatController _controller;
     private readonly EnemyAI _enemyAI;
@@ -20,6 +22,7 @@
     public override void EnterState()
     {
         base.EnterState();
+        Debug.Log("Enemy turn");
         _messageTextShower.ShowMessage("Enemy's Turn", _controller.MessageUnfadeDuration, _controller.MessageFadeDuration);
         _theTurnIsUsed = false;
 
@@ -32,7 +35,7 @@
     public override void ExitState()
     {
         base.ExitState(); 
-        //Debug.Log("EnemyTurn exited");
+        Debug.Log("EnemyTurn exited");
     }
 
     public override void UpdateLogic()
