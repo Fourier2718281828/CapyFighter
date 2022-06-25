@@ -152,7 +152,7 @@ public class Fighter : MonoBehaviour
 
     public bool CanSuperAttack() => HasEnoughManaFor(_unit.SuperAttackManaCost);
 
-    public bool CanEquipShield() => HasEnoughManaFor(_unit.ShieldManaCost);
+    public bool CanEquipShield() => HasEnoughManaFor(_unit.ShieldManaCost) && !_isShielded;
 
     public float HPPercentage() => (float)_currentHP / _unit.MaxHP;
 
