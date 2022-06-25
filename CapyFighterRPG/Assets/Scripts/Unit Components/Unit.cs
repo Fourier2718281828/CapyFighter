@@ -6,6 +6,8 @@ public class Unit : MonoBehaviour
     private UnitData _data;
     private Animator _animator;
     private Fighter _fighter;
+
+    [SerializeField] private GameObject _damageCanvas;
     #endregion
 
     #region MonoBehaviour Methods
@@ -15,16 +17,16 @@ public class Unit : MonoBehaviour
         _fighter = GetComponent<Fighter>();
     }
 
+    private void Start()
+    {
+        Vector3 position = _damageCanvas.transform.position;
+        position.y -= _data.OffsetY;
+        _damageCanvas.transform.position = position;
+    }
+
     private void OnEnable()
     {
         _fighter.OnAttacked += _ => _animator.Play("Attack");
-        //_fighter.OnDamageReceived += (p, d) =>
-        //{
-        //    if(_animator.GetBool("IsShielded"))
-        //        _animator.Play("ShieldHurt");
-        //    else
-        //        _animator.Play("Hurt");
-        //};
         _fighter.OnSuperAttacked += _ => _animator.Play("SuperAttack");
         _fighter.OnShieldEquiped += () =>
         {

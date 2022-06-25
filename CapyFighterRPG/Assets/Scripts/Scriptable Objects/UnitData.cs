@@ -5,6 +5,7 @@ public class UnitData : ScriptableObject
 {
     [SerializeField] private RuntimeAnimatorController _animator;
     [SerializeField] private Sprite _avatarIcon;
+    [SerializeField] private float _offsetY;
     [SerializeField] private int _maxHP;
     [SerializeField] private int _maxMP;
     [SerializeField] private int _attackDamage;
@@ -17,6 +18,7 @@ public class UnitData : ScriptableObject
 
     public RuntimeAnimatorController Animator => _animator;
     public Sprite AvatarIcon => _avatarIcon;
+    public float OffsetY => _offsetY;
     public int MaxHP => _maxHP;
     public int MaxMP => _maxMP;
     public int AttackDamage => _attackDamage;

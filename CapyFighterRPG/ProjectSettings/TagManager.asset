@@ -51,3 +51,6 @@ TagManager:
   - name: Menu
     uniqueID: 3453840743
     locked: 0
+  - name: WinLossPause
+    uniqueID: 3714307983
+    locked: 0

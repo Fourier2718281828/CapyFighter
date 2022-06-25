@@ -1,4 +1,6 @@
-﻿public class EnemyTurnState : PausableState
+﻿using UnityEngine;
+
+public class EnemyTurnState : PausableState
 {
     private readonly CombatController _controller;
     private readonly EnemyAI _enemyAI;
@@ -20,8 +22,15 @@
     public override void EnterState()
     {
         base.EnterState();
-        _messageTextShower.ShowMessage("Enemy's Turn", _controller.MessageUnfadeDuration, _controller.MessageFadeDuration);
-        _theTurnIsUsed = false;
+
+        if (_isPaused)
+            _isPaused = false;
+        else
+        {
+            _messageTextShower.ShowMessage("Enemy's Turn",
+                _controller.MessageUnfadeDuration, _controller.MessageFadeDuration);
+            _theTurnIsUsed = false;
+        }
 
         foreach (var fighter in _controller.EnemiesToFighters.Values)
         {
@@ -32,7 +41,6 @@
     public override void ExitState()
     {
         base.ExitState(); 
-        //Debug.Log("EnemyTurn exited");
     }
 
     public override void UpdateLogic()
@@ -45,6 +53,8 @@
         taskToDo.Do();
         if (_controller.HeroCount == 0)
             _controller.SwitchStateInSeconds(_controller.LossState, _controller.TurnDurationSeconds);
+        else if(taskToDo.Type == Task.TaskType.Move)
+            _controller.SwitchState(_controller.EnemyMovingState);
         else
             _controller.SwitchStateInSeconds(_controller.HeroTurnState, _controller.TurnDurationSeconds);
         _theTurnIsUsed = true;

@@ -16,6 +16,13 @@ class VectorGrid
     private int     _cols;
     #endregion
 
+    #region Properties
+    public Vector2 Origin => _origin;
+    public Vector2 OriginsNeighbour => _originsNeighbour;
+    public Vector2 DiagonalToOrigin => _diagonalToOrigin;
+    public Vector2 OtherNeighbour => _otherNeighbour;
+    #endregion
+
     #region Constructors
     /// <summary>
     /// The grid will be constructed by three points (paralelogram vertices)

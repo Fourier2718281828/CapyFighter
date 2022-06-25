@@ -117,9 +117,10 @@ GameObject:
   - component: {fileID: 5033232583750683227}
   - component: {fileID: -3012688627395325884}
   - component: {fileID: 7716968800973694872}
+  - component: {fileID: -1782072316530704489}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -221,6 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae6daa98b126c446969c14094d22b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageCanvas: {fileID: 1896498185923991218}
 --- !u!114 &1035475440441603271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +302,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4516776070461e4bbed6a856c2649c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1782072316530704489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4776075600859033398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f65c945d74d36d4d869d3b1ab59b1bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sortingOrderOrigin: 100
 --- !u!1 &5458677900032328068
 GameObject:
   m_ObjectHideFlags: 0
