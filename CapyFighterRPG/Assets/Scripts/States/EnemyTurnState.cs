@@ -22,9 +22,15 @@ public class EnemyTurnState : PausableState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Enemy turn");
-        _messageTextShower.ShowMessage("Enemy's Turn", _controller.MessageUnfadeDuration, _controller.MessageFadeDuration);
-        _theTurnIsUsed = false;
+
+        if (_isPaused)
+            _isPaused = false;
+        else
+        {
+            _messageTextShower.ShowMessage("Enemy's Turn",
+                _controller.MessageUnfadeDuration, _controller.MessageFadeDuration);
+            _theTurnIsUsed = false;
+        }
 
         foreach (var fighter in _controller.EnemiesToFighters.Values)
         {
@@ -35,7 +41,6 @@ public class EnemyTurnState : PausableState
     public override void ExitState()
     {
         base.ExitState(); 
-        Debug.Log("EnemyTurn exited");
     }
 
     public override void UpdateLogic()

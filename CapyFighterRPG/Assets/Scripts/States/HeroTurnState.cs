@@ -24,10 +24,16 @@ public class HeroTurnState : PausableState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Hero turn");
-        _theTurnIsUsed = false;
         _controller.RefreshSelectedSlots();
-        _messageTextShower.ShowMessage("Your Turn", _controller.MessageUnfadeDuration, _controller.MessageFadeDuration);
+
+        if (_isPaused)
+            _isPaused = false;
+        else
+        {
+            _messageTextShower.ShowMessage("Your Turn",
+                _controller.MessageUnfadeDuration, _controller.MessageFadeDuration);
+            _theTurnIsUsed = false;
+        }
 
         foreach (var fighter in _controller.HerosToFighters.Values)
         {
@@ -38,12 +44,15 @@ public class HeroTurnState : PausableState
     public override void ExitState()
     {
         base.ExitState();
-        Debug.Log("Hero turn exited");
+        _controlSet.Disappear();
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+
+        if(!_controlSet.IsShown && IsFaded && !_theTurnIsUsed)
+            _controlSet.Appear();
 
         //if (_theTurnIsUsed || !IsFaded) return;
         //if (!_controller.IsHeroSlotSelected()) return;
@@ -90,7 +99,6 @@ public class HeroTurnState : PausableState
 
     private void SubscribeEventsToControls()
     {
-        _controlSet.AttackButton.onClick.RemoveAllListeners();
         _controlSet.AttackButton.onClick.AddListener(Attack);
         _controlSet.SuperAttackButton.onClick.AddListener(SuperAttack);
         _controlSet.EquipShieldButton.onClick.AddListener(EquipShield);

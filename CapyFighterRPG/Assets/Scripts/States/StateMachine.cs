@@ -38,9 +38,9 @@ public abstract class StateMachine : MonoBehaviour
 
     private IEnumerator SwitchStateCoroutine(State newState, float seconds)
     {
+        yield return new WaitForSeconds(seconds);
         PreviousState = CurrentState;
         CurrentState.ExitState();
-        yield return new WaitForSeconds(seconds);
         CurrentState = newState;
         CurrentState.EnterState();
     }

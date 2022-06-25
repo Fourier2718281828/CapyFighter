@@ -301,7 +301,6 @@ public class CombatController : StateMachine
 
     public void RefreshSelectedSlots()
     {
-        Debug.Log("Refreshed");
         SelectedHeroSlot = SelectedEnemySlot = -1;
     }
 

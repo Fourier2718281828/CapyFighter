@@ -16,9 +16,23 @@ public class ControlSet : MonoBehaviour
     public Button AttackButton => _attack;
     public Button EquipShieldButton => _equipShield;
     public Button SuperAttackButton => _superAttack;
+    public bool IsShown { get; private set; }
 
-    private void Appear() => _controlsCanvas.SetActive(true);
+    private void Awake()
+    {
+        Disappear();
+    }
 
-    private void Disappear() => _controlsCanvas.SetActive(false);
+    public void Appear()
+    {
+        IsShown = true;
+        _controlsCanvas.SetActive(true);
+    }   
+
+    public void Disappear()
+    {
+        IsShown = false;
+        _controlsCanvas.SetActive(false);
+    }
 
 }
