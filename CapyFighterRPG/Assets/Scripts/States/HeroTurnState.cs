@@ -18,6 +18,7 @@ public class HeroTurnState : PausableState
         _controlSet = _controller.GetComponent<ControlSet>();
         _theTurnIsUsed = true;
 
+        SubscribeEventsToControls();
     }
 
     public override void EnterState()
@@ -44,64 +45,64 @@ public class HeroTurnState : PausableState
     {
         base.UpdateLogic();
 
-        if (_theTurnIsUsed || !IsFaded) return;
+        //if (_theTurnIsUsed || !IsFaded) return;
+        //if (!_controller.IsHeroSlotSelected()) return;
 
-        if (!_controller.IsHeroSlotSelected()) return;
 
-        SubscribeEventsToControls();
+        ////Moving
+        //if (Input.GetKeyDown(KeyCode.UpArrow))
+        //{
+        //    MoveUp();
+        //}
 
-        //Moving
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            MoveUp();
-        }
+        //if (Input.GetKeyDown(KeyCode.DownArrow))
+        //{
+        //    MoveDown();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            MoveDown();
-        }
+        //if (Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //    MoveLeft();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            MoveLeft();
-        }
+        //if (Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    MoveRight();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            MoveRight();
-        }
+        ////Shield equipment
+        //if (Input.GetKey(KeyCode.D))
+        //{
+        //    EquipShield();
+        //}
 
-        //Shield equipment
-        if (Input.GetKey(KeyCode.D))
-        {
-            EquipShield();
-        }
+        //if (!_controller.AreSlotsSelected()) return;
 
-        if (!_controller.AreSlotsSelected()) return;
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Attack();
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            SuperAttack();
-        }
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    Attack();
+        //}
+        //else if (Input.GetKey(KeyCode.S))
+        //{
+        //    SuperAttack();
+        //}
     }
 
     private void SubscribeEventsToControls()
     {
         _controlSet.AttackButton.onClick.RemoveAllListeners();
-        _controlSet.AttackButton.onClick.AddListener(() => Attack());
-        _controlSet.SuperAttackButton.onClick.AddListener(() => SuperAttack());
-        _controlSet.EquipShieldButton.onClick.AddListener(() => EquipShield());
-        _controlSet.MoveUpButton.onClick.AddListener(() => MoveUp());
-        _controlSet.MoveDownButton.onClick.AddListener(() => MoveDown());
+        _controlSet.AttackButton.onClick.AddListener(Attack);
+        _controlSet.SuperAttackButton.onClick.AddListener(SuperAttack);
+        _controlSet.EquipShieldButton.onClick.AddListener(EquipShield);
+        _controlSet.MoveUpButton.onClick.AddListener(MoveUp);
+        _controlSet.MoveDownButton.onClick.AddListener(MoveDown);
     }
 
     private void Attack()
     {
-        Debug.Log($"Selected slots : {_controller.SelectedHeroSlot}, {_controller.SelectedEnemySlot}");
+        if (_theTurnIsUsed || !IsFaded) return;
+        if (!_controller.AreSlotsSelected()) return;
+
         Fighter attackingFighter = _controller.GetHeroFighterAtSlot(_controller.SelectedHeroSlot);
 
         if (attackingFighter.CanAttack())
@@ -122,6 +123,9 @@ public class HeroTurnState : PausableState
 
     private void SuperAttack()
     {
+        if (_theTurnIsUsed || !IsFaded) return;
+        if (!_controller.AreSlotsSelected()) return;
+
         Fighter attackingFighter = _controller.GetHeroFighterAtSlot(_controller.SelectedHeroSlot);
 
         if(attackingFighter.CanSuperAttack())
@@ -142,6 +146,8 @@ public class HeroTurnState : PausableState
 
     private void EquipShield()
     {
+        if (_theTurnIsUsed || !IsFaded) return;
+        if (!_controller.IsHeroSlotSelected()) return;
         Fighter fighterToGetEquiped = _controller.GetHeroFighterAtSlot(_controller.SelectedHeroSlot);
         if (fighterToGetEquiped.CanEquipShield())
         {
@@ -178,6 +184,8 @@ public class HeroTurnState : PausableState
 
     private void VerticalMoveByDisplacement(int displacement)
     {
+        if (_theTurnIsUsed || !IsFaded) return;
+        if (!_controller.IsHeroSlotSelected()) return;
         var selectedHero = _controller.GetHeroAtSlot(_controller.SelectedHeroSlot);
         var mover = selectedHero.GetComponent<Mover>();
         var thisSlot = _controller.GetHeroSlot(selectedHero);
@@ -196,6 +204,8 @@ public class HeroTurnState : PausableState
 
     private void HorizontalMoveByDisplacement(int displacement)
     {
+        if (_theTurnIsUsed || !IsFaded) return;
+        if (!_controller.IsHeroSlotSelected()) return;
         var selectedHero = _controller.GetHeroAtSlot(_controller.SelectedHeroSlot);
         var mover = selectedHero.GetComponent<Mover>();
         var thisSlot = _controller.GetHeroSlot(selectedHero);

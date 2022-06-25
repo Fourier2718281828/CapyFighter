@@ -202,6 +202,12 @@ public class CombatController : StateMachine
             return;
         }
 
+        if(!detectedCollider.gameObject.CompareTag("Unit"))
+        {
+            //Not unit collider was hit
+            return;
+        }
+
         try
         {
             SelectedHeroSlot = GetHeroSlot(detectedCollider.gameObject);
