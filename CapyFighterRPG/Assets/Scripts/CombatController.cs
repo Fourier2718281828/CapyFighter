@@ -25,7 +25,8 @@ public class CombatController : StateMachine
     [HideInInspector] public EnemyTurnState EnemyTurnState;
     [HideInInspector] public HeroTurnState HeroTurnState;
     [HideInInspector] public PauseState PauseState;
-    [HideInInspector] public MovingState MovingState;
+    [HideInInspector] public HeroMovingState HeroMovingState;
+    [HideInInspector] public EnemyMovingState EnemyMovingState;
     [HideInInspector] public WinState WinState;
     [HideInInspector] public LossState LossState;
     #endregion
@@ -68,7 +69,7 @@ public class CombatController : StateMachine
         EnemyTurnState = new EnemyTurnState(this);
         HeroTurnState = new HeroTurnState(this);
         PauseState = new PauseState(this);
-        MovingState = new MovingState(this);
+        HeroMovingState = new HeroMovingState(this);
         WinState = new WinState(this);
         LossState = new LossState(this);
 

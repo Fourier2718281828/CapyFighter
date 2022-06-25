@@ -48,6 +48,8 @@ public class EnemyTurnState : PausableState
         taskToDo.Do();
         if (_controller.HeroCount == 0)
             _controller.SwitchStateInSeconds(_controller.LossState, _controller.TurnDurationSeconds);
+        else if(taskToDo.Type == Task.TaskType.Move)
+            _controller.SwitchState(_controller.EnemyMovingState);
         else
             _controller.SwitchStateInSeconds(_controller.HeroTurnState, _controller.TurnDurationSeconds);
         _theTurnIsUsed = true;

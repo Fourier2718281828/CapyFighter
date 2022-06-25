@@ -191,7 +191,7 @@ public class HeroTurnState : PausableState
         }
 
         mover.MoveToSlot(nextSlot);
-        _controller.SwitchState(_controller.MovingState);
+        _controller.SwitchState(_controller.HeroMovingState);
     }
 
     private void HorizontalMoveByDisplacement(int displacement)
@@ -209,6 +209,6 @@ public class HeroTurnState : PausableState
         }
 
         mover.MoveToSlot(nextSlot);
-        _controller.SwitchState(_controller.MovingState);
+        _controller.SwitchState(_controller.HeroMovingState);
     }
 }
