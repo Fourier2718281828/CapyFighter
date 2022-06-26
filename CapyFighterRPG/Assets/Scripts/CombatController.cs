@@ -76,7 +76,7 @@ public class CombatController : StateMachine
         SelectedHeroSlot = SelectedEnemySlot = -1;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         if (!AreUnitArraysCorrect())
         {

@@ -22,6 +22,10 @@ public class Fighter : MonoBehaviour
     public event Action OnShieldBroken;
     public event Action HurtAnimation;
     public event Action ShieldHurtAnimation;
+
+    public event Action<int> OnTotalDamageReceived;
+    public event Action<int> OnTotalShieldDamageReceived;
+
     #endregion
 
     #region Properties
@@ -46,6 +50,7 @@ public class Fighter : MonoBehaviour
 
     public void ReceiveDamage(int damage)
     {
+        OnTotalDamageReceived?.Invoke(damage);
         var totalDamage = damage;
 
         if (_isShielded)
@@ -134,6 +139,7 @@ public class Fighter : MonoBehaviour
 
     public void ReceiveShieldDamage(ref int totalDamage)
     {
+        OnTotalShieldDamageReceived?.Invoke(totalDamage);
         if(totalDamage >= _shieldHP)
         {
             totalDamage -= _shieldHP;
