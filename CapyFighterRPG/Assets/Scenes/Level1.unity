@@ -2377,6 +2377,7 @@ GameObject:
   - component: {fileID: 1307390687}
   - component: {fileID: 1307390686}
   - component: {fileID: 1307390688}
+  - component: {fileID: 1307390689}
   m_Layer: 0
   m_Name: CombatController
   m_TagString: CombatController
@@ -2589,6 +2590,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a155fd6207007d42bff8eef74f6b913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _achievements:
+  - {fileID: 11400000, guid: fbc548cd559d6ae46ba64fa28a78eeee, type: 2}
 --- !u!114 &1307390688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2606,6 +2609,18 @@ MonoBehaviour:
   _hintText: {fileID: 391016769}
   _unfadeTimeSeconds: 0.5
   _fadeTimeSeconds: 6
+--- !u!114 &1307390689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307390674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f21819ec6bf95d499cf9991d7439d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1426483072
 GameObject:
   m_ObjectHideFlags: 0
