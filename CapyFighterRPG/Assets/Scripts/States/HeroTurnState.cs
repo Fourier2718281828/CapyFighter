@@ -6,6 +6,7 @@ public class HeroTurnState : PausableState
     private readonly Spawner _spawner;
     private readonly MessageTextShower _messageTextShower;
     private readonly ControlSet _controlSet;
+    private readonly HintShower _hintShower;
     private bool _theTurnIsUsed;
 
     private bool IsFaded => _messageTextShower.IsFaded;
@@ -16,6 +17,7 @@ public class HeroTurnState : PausableState
         _spawner = _controller.GetComponent<Spawner>();
         _messageTextShower = _controller.GetComponent<MessageTextShower>();
         _controlSet = _controller.GetComponent<ControlSet>();
+        _hintShower = _controller.GetComponent<HintShower>();
         _theTurnIsUsed = true;
 
         SubscribeEventsToControls();
@@ -83,7 +85,7 @@ public class HeroTurnState : PausableState
         }
         else
         {
-            //TODO some message like "Not enough mana"
+            _hintShower.ShowHint("Not enough mana for Attack");
         }
     }
 
@@ -106,7 +108,7 @@ public class HeroTurnState : PausableState
         }
         else
         {
-            //TODO some message like "Not enough mana"
+            _hintShower.ShowHint("Not enough mana for Super Attack");
         }
     }
 
@@ -123,7 +125,7 @@ public class HeroTurnState : PausableState
         }
         else
         {
-            //TODO make some message like "Not enough mana"
+            _hintShower.ShowHint("Not enough mana to Equip The Shield");
         }
     }
 
