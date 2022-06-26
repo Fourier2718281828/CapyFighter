@@ -57,11 +57,11 @@ public class Fighter : MonoBehaviour
             OnDied?.Invoke();
         else if (_isShielded)
         {
-            HurtAnimation?.Invoke();
             OnDamageReceived?.Invoke(HPPercentage(), totalDamage);
         }
         else
         {
+            HurtAnimation?.Invoke();
             OnDamageReceived?.Invoke(HPPercentage(), totalDamage);
         }
     }

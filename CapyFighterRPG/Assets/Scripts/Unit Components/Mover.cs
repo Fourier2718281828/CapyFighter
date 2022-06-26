@@ -44,7 +44,6 @@ public class Mover : MonoBehaviour
         }
 
         IsMoving = false;
-        Debug.Log("Moving is finished");
     }
     #endregion
 }

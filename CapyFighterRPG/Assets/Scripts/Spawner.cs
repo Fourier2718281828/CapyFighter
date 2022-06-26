@@ -4,6 +4,7 @@ using System;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject _unitPrefab;
+    [SerializeField] private GameObject _platformPrefab;
 
     [Header("GameObject to store all units in. Not a unit prefab!")]
     [SerializeField] private GameObject _unitContainer;
@@ -36,6 +37,9 @@ public class Spawner : MonoBehaviour
 
     private Vector3[] _heroSlotPositions;
     private Vector3[] _enemySlotPositions;
+    private PlatformFader[] _heroPlatformFaders;
+    private PlatformFader[] _enemyPlatformFaders;
+
 
     public int HeroSlotCount => _heroSlots.Length;
     public int EnemySlotCount => _enemySlots.Length;
@@ -47,6 +51,8 @@ public class Spawner : MonoBehaviour
     public UnitData[] EnemySlots => _enemySlots;
     public Vector3[] HeroSlotPositions => _heroSlotPositions;
     public Vector3[] EnemySlotPositions => _enemySlotPositions;
+    public PlatformFader[] HeroPlatformFaders => _heroPlatformFaders;
+    public PlatformFader[] EnemyPlatformFaders => _enemyPlatformFaders;
     public int HeroSlotRowsCount => GetSlotRowsCount(HeroSlots.Length, MaxHeroRowCount);
     public int EnemySlotRowsCount => GetSlotRowsCount(EnemySlots.Length, MaxEnemyRowCount);
     public int HeroSlotColsCount => GetSlotColsCount(HeroSlots.Length, MaxHeroRowCount);
@@ -56,7 +62,11 @@ public class Spawner : MonoBehaviour
 
     public void Awake()
     {
+        _heroPlatformFaders = new PlatformFader[HeroSlots.Length];
+        _enemyPlatformFaders = new PlatformFader[HeroSlots.Length];
+
         EvaluateSlotPositions();
+        PlacePlatforms();
     }
 
     public GameObject SpawnHeroAtSlot(int slot)
@@ -66,11 +76,8 @@ public class Spawner : MonoBehaviour
         if (HeroSlots[slot] == null)
             throw new InvalidOperationException($"Trying to instantiate a hero at an empty slot : {slot}");
 
-        Vector3 position = _heroSlotPositions[slot];
-        position.y += HeroSlots[slot].OffsetY;
-
         GameObject spawned =
-            Instantiate(_unitPrefab, position, Quaternion.identity, _unitContainer.transform);
+            Instantiate(_unitPrefab, _heroSlotPositions[slot], Quaternion.identity, _unitContainer.transform);
 
         spawned.GetComponent<Unit>().Init(HeroSlots[slot]);
         spawned.GetComponent<SpriteRenderer>().flipX = false;
@@ -86,11 +93,8 @@ public class Spawner : MonoBehaviour
         if (EnemySlots[slot] == null)
             throw new InvalidOperationException($"Trying to instantiate an enemy at an empty slot : {slot}");
 
-        Vector3 position = _enemySlotPositions[slot];
-        position.y += EnemySlots[slot].OffsetY;
-
         GameObject spawned =
-            Instantiate(_unitPrefab, position, Quaternion.identity, _unitContainer.transform);
+            Instantiate(_unitPrefab, _enemySlotPositions[slot], Quaternion.identity, _unitContainer.transform);
 
         spawned.GetComponent<Unit>().Init(EnemySlots[slot]);
         spawned.GetComponent<SpriteRenderer>().flipX = true;
@@ -99,6 +103,32 @@ public class Spawner : MonoBehaviour
         return spawned;
     }
 
+    public void PlacePlatforms()
+    {
+        //foreach (var position in HeroSlotPositions)
+        //{
+        //    _platformPrefab.transform.position = position;
+        //    Instantiate(_platformPrefab);
+        //}
+
+        //foreach (var position in EnemySlotPositions)
+        //{
+        //    _platformPrefab.transform.position = position;
+        //    Instantiate(_platformPrefab);
+        //}
+
+        for (int i = 0; i < _heroSlotPositions.Length; ++i)
+        {
+            _platformPrefab.transform.position = _heroSlotPositions[i];
+            HeroPlatformFaders[i] = Instantiate(_platformPrefab).GetComponent<PlatformFader>();
+        }
+
+        for(int i = 0; i < _enemySlotPositions.Length; ++i)
+        {
+            _platformPrefab.transform.position = _enemySlotPositions[i];
+            EnemyPlatformFaders[i] = Instantiate(_platformPrefab).GetComponent<PlatformFader>();
+        }
+    }
     private void EvaluateSlotPositions()
     {
         VectorGrid grid;

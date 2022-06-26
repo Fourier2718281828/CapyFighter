@@ -12,8 +12,7 @@ public class PositionRendererSorter : MonoBehaviour
         _transform = transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         _renderer.sortingOrder = (int)(_sortingOrderOrigin - _transform.position.y);
     }

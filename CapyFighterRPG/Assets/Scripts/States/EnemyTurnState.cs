@@ -22,6 +22,7 @@ public class EnemyTurnState : PausableState
     public override void EnterState()
     {
         base.EnterState();
+        _controller.RefreshSelectedSlots();
 
         if (_isPaused)
             _isPaused = false;
