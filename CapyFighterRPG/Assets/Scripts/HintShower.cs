@@ -7,9 +7,9 @@ public class HintShower : MonoBehaviour
     [SerializeField] private GameObject _hintCanvas;
     [SerializeField] private GameObject _hintPanel;
     [SerializeField] private Text _hintText;
-    [SerializeField] private CanvasGroup _panelCanvasGroup;
     [SerializeField] private float _unfadeTimeSeconds;
     [SerializeField] private float _fadeTimeSeconds;
+    private CanvasGroup _panelCanvasGroup;
 
     private void Awake()
     {

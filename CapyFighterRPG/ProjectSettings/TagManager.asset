@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CombatController
   - GameMusic
+  - Unit
   layers:
   - Default
   - TransparentFX

@@ -68,9 +68,12 @@ public class HeroTurnState : PausableState
 
     private void Attack()
     {
-        if (_theTurnIsUsed || !IsFaded) return;
-        if (!_controller.AreSlotsSelected()) return;
+        
 
+        if (_theTurnIsUsed || !IsFaded) return;
+        Debug.Log("there");
+        if (!_controller.AreSlotsSelected()) return;
+        Debug.Log("And there");
         Fighter attackingFighter = _controller.GetHeroFighterAtSlot(_controller.SelectedHeroSlot);
 
         if (attackingFighter.CanAttack())
