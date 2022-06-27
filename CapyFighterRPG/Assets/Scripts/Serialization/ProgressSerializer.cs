@@ -9,15 +9,15 @@ public class ProgressSerializer : MonoBehaviour
     private void Awake()
     {
         _currentProgress = GetComponent<GameProgress>();
-
-        try
-        {
-            LoadProgress();
-        }
-        catch (InvalidOperationException)
-        {
-            SerializeAndLoadNewGameProgress();
-        }
+        LoadProgress();
+        //try
+        //{
+        //    LoadProgress();
+        //}
+        //catch (InvalidOperationException)
+        //{
+        //    SerializeAndLoadNewGameProgress();
+        //}
     }
 
     public void SaveProgress()
@@ -36,9 +36,9 @@ public class ProgressSerializer : MonoBehaviour
     //TODO make to do this when "new game" button is hit!!!
     private void SerializeAndLoadNewGameProgress()
     {
-        var achievements = GetComponent<AchievementDataList>().Achievements;
+        var achievementsDatas = GetComponent<AchievementDataList>().Achievements;
         var listOfAchievements = new List<Achievement>();
-        foreach (var data in achievements)
+        foreach (var data in achievementsDatas)
         {
             listOfAchievements.Add(new Achievement(data, null));
         }

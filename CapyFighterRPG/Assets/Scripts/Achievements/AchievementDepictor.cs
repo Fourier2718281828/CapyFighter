@@ -28,7 +28,6 @@ public class AchievementDepictor : MonoBehaviour
         for (int i = 0; i < _NumOfRowsAtPage; i++)
         {
             _positions[i] = new Vector3(0f, firstRowTop - halfRowHeight - i * rowHeight, 1f);
-            Debug.Log(_positions[i].ToString());
         }
     }
 
