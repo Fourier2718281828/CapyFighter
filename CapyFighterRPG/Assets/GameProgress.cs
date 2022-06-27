@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class GameProgress : MonoBehaviour
 {
@@ -9,19 +8,16 @@ public class GameProgress : MonoBehaviour
     #region Fields to Serialize
     public int Level { get; private set; }
     public int LevelProgress { get; private set; }
-    public List<Achievement> Achievements { get; private set; }
     #endregion
 
     #region Main Statistics
-    public GameStats GameStats { get; private set; }
-    
+    public int TotalDamage { get; private set; }
+
     #endregion
 
     private void Awake()
     {
         _combatController = GetComponent<CombatController>();
-        IsInitialized = true;
-        //GameStats = new GameStats();
     }
 
     private void Start()
@@ -31,22 +27,15 @@ public class GameProgress : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log($"Size = {Achievements.Count}");
-        //Debug.Log($"first = {Achievements[0].IsFirstStarFulfilled()}, " +
-        //    $"second = {Achievements[0].IsThirdStarFulfilled()}, damage = {GameStats.TotalDamage}");
+        Debug.Log($"Level = {Level}, EXP = {LevelProgress}");
     }
 
     public void Init(GameProgressSave save)
     {
         Level = save.Level;
         LevelProgress = save.LevelProgress;
-        Achievements = save.Achievements;
-        GameStats = save.Stats;
-
-        foreach(var ach in Achievements)
-        {
-            ach.Attach(GameStats);
-        }
+        IsInitialized = true;
+        TotalDamage = 0;
     }
 
     private void AssignEventsToFighters()
@@ -55,14 +44,14 @@ public class GameProgress : MonoBehaviour
         {
             enemyFighter.OnTotalDamageReceived += (damage) =>
             {
-                GameStats.TotalDamage += damage;
+                TotalDamage += damage;
                 GetExperience(damage);
                 UpdateAllAchievements();
             };
 
             enemyFighter.OnTotalShieldDamageReceived += (damage) =>
             {
-                GameStats.TotalDamage += damage;
+                TotalDamage += damage;
                 GetExperience(damage);
                 UpdateAllAchievements();
             };
@@ -71,10 +60,12 @@ public class GameProgress : MonoBehaviour
 
     private void UpdateAllAchievements()
     {
-        foreach (var ach in Achievements)
-        {
-            ach.UpdateProgress();
-        }
+        //foreach(var ach in Achievements)
+        //{
+        //    ach.UpdateProgress();
+        //}
+
+        //Achievements.UpdateProgress();
     }
 
     public void GetExperience(int exp)

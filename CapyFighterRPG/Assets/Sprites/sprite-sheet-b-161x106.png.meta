@@ -131,6 +131,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -139,9 +141,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -162,9 +164,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -972,6 +977,43 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      sprite-sheet-b-161x106_24: 7186051963098983958
+      sprite-sheet-b-161x106_19: 3236315517040951426
+      sprite-sheet-b-161x106_1: 7439112621939314371
+      sprite-sheet-b-161x106_10: 1004399101200609526
+      sprite-sheet-b-161x106_13: -2643987075502965938
+      sprite-sheet-b-161x106_2: 7677142628790236666
+      sprite-sheet-b-161x106_23: -257447464721638564
+      sprite-sheet-b-161x106_35: -4842330938037084465
+      sprite-sheet-b-161x106_27: 5877631790554227220
+      sprite-sheet-b-161x106_3: 7438654767273448097
+      sprite-sheet-b-161x106_25: 4298985208452438968
+      sprite-sheet-b-161x106_17: 978958069020317003
+      sprite-sheet-b-161x106_7: 4720915440810386694
+      sprite-sheet-b-161x106_15: 3949593791921285079
+      sprite-sheet-b-161x106_8: -7438274487205684210
+      sprite-sheet-b-161x106_34: 5305971858847313173
+      sprite-sheet-b-161x106_31: -1450293608278938843
+      sprite-sheet-b-161x106_4: -6048790891694014686
+      sprite-sheet-b-161x106_14: -6903412205536405613
+      sprite-sheet-b-161x106_29: -3680975685919578964
+      sprite-sheet-b-161x106_33: -7333836129747020466
+      sprite-sheet-b-161x106_21: -8866092998855268596
+      sprite-sheet-b-161x106_0: -9215036744415066934
+      sprite-sheet-b-161x106_28: 8051663503979451734
+      sprite-sheet-b-161x106_9: -7036754236073440322
+      sprite-sheet-b-161x106_6: -194095015144645895
+      sprite-sheet-b-161x106_11: 1491457769008446471
+      sprite-sheet-b-161x106_30: 2403210496529802338
+      sprite-sheet-b-161x106_18: -3080951252787163562
+      sprite-sheet-b-161x106_22: 844077960877937634
+      sprite-sheet-b-161x106_26: 954758631408763548
+      sprite-sheet-b-161x106_12: -840259290507752946
+      sprite-sheet-b-161x106_32: 4929153109478881424
+      sprite-sheet-b-161x106_20: -8442616897294595258
+      sprite-sheet-b-161x106_16: -8678812848070851474
+      sprite-sheet-b-161x106_5: 6938757048282932380
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -129,6 +129,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -952,6 +953,42 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      sprite-sheet-2-239x178_14: 5715173450317462121
+      sprite-sheet-2-239x178_24: 1514251630581313511
+      sprite-sheet-2-239x178_23: 5383675737177631929
+      sprite-sheet-2-239x178_1: 5354804868356725311
+      sprite-sheet-2-239x178_2: -8062236535801138245
+      sprite-sheet-2-239x178_6: -2328626406307541886
+      sprite-sheet-2-239x178_30: -4392322792398209967
+      sprite-sheet-2-239x178_8: -5311422429105289138
+      sprite-sheet-2-239x178_34: 3331959513967861872
+      sprite-sheet-2-239x178_17: 6192384511178754484
+      sprite-sheet-2-239x178_15: -5313277534368639801
+      sprite-sheet-2-239x178_26: 2689624423474667382
+      sprite-sheet-2-239x178_31: 2772940330470029070
+      sprite-sheet-2-239x178_32: -2735061039818858504
+      sprite-sheet-2-239x178_4: -3602842787195343905
+      sprite-sheet-2-239x178_27: 2056875543018517899
+      sprite-sheet-2-239x178_19: 8816649230167894357
+      sprite-sheet-2-239x178_21: 4433985364942619486
+      sprite-sheet-2-239x178_16: -3765268844147604129
+      sprite-sheet-2-239x178_10: -5543187701717754868
+      sprite-sheet-2-239x178_7: 5163363002229603202
+      sprite-sheet-2-239x178_13: -317163770837427293
+      sprite-sheet-2-239x178_18: 5140925200301681624
+      sprite-sheet-2-239x178_12: 2967123956501499342
+      sprite-sheet-2-239x178_22: 4605357634333984248
+      sprite-sheet-2-239x178_20: -5641952816691563293
+      sprite-sheet-2-239x178_28: -6046741622116328280
+      sprite-sheet-2-239x178_3: 2380029110180133541
+      sprite-sheet-2-239x178_11: 2872602652217209720
+      sprite-sheet-2-239x178_33: 8755490647661081211
+      sprite-sheet-2-239x178_5: 7985029596037474521
+      sprite-sheet-2-239x178_9: 1619418980728237043
+      sprite-sheet-2-239x178_0: 6129817992213485248
+      sprite-sheet-2-239x178_25: -6360008674124261602
+      sprite-sheet-2-239x178_29: -302232549029096401
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

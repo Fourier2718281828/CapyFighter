@@ -120,6 +120,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -880,6 +881,39 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      sprite-sheet-2-385x318_28: 43413203544544297
+      sprite-sheet-2-385x318_14: 441118956486572188
+      sprite-sheet-2-385x318_25: 8579299760134492645
+      sprite-sheet-2-385x318_21: 8226728524217498233
+      sprite-sheet-2-385x318_22: 2879749593323921917
+      sprite-sheet-2-385x318_12: 4437879013294517309
+      sprite-sheet-2-385x318_18: 1992896024579398448
+      sprite-sheet-2-385x318_30: -9078225107741763701
+      sprite-sheet-2-385x318_16: 4897668846636670783
+      sprite-sheet-2-385x318_13: -603378078051399310
+      sprite-sheet-2-385x318_17: 8329336706271100584
+      sprite-sheet-2-385x318_0: 4267308251709065130
+      sprite-sheet-2-385x318_29: -2407070766190903963
+      sprite-sheet-2-385x318_15: 1584884369627763383
+      sprite-sheet-2-385x318_1: 4916917511840539703
+      sprite-sheet-2-385x318_11: 3245840589076669076
+      sprite-sheet-2-385x318_2: -4977993001215297601
+      sprite-sheet-2-385x318_8: -5110172184887888360
+      sprite-sheet-2-385x318_10: -7527253114862759498
+      sprite-sheet-2-385x318_9: -2114333631571368443
+      sprite-sheet-2-385x318_26: -362838555970306899
+      sprite-sheet-2-385x318_31: -6062936549661727173
+      sprite-sheet-2-385x318_23: -4235905826448174622
+      sprite-sheet-2-385x318_4: 8212810944262560738
+      sprite-sheet-2-385x318_6: 9053243392095742250
+      sprite-sheet-2-385x318_27: 7862397876278029158
+      sprite-sheet-2-385x318_3: -7613115833431074268
+      sprite-sheet-2-385x318_7: -8085507197905313945
+      sprite-sheet-2-385x318_20: -49853072031591373
+      sprite-sheet-2-385x318_19: -2213339357391886351
+      sprite-sheet-2-385x318_24: -4144743439211479436
+      sprite-sheet-2-385x318_5: 1232731571331344598
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

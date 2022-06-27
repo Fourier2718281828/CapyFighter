@@ -129,6 +129,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -952,6 +953,42 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      sprite-sheet-385x318_30: 4126748574580223430
+      sprite-sheet-385x318_17: -4776561482785306189
+      sprite-sheet-385x318_25: 4222076553559826556
+      sprite-sheet-385x318_10: 7777391639391361079
+      sprite-sheet-385x318_19: 4180036274326765081
+      sprite-sheet-385x318_8: 1816418372293612020
+      sprite-sheet-385x318_5: 8545588321792732933
+      sprite-sheet-385x318_16: 641369224986208047
+      sprite-sheet-385x318_31: 1657619448390711096
+      sprite-sheet-385x318_32: 2508137986225234285
+      sprite-sheet-385x318_6: 1476578045569338534
+      sprite-sheet-385x318_21: 9032073711838736291
+      sprite-sheet-385x318_2: -3129130797933941453
+      sprite-sheet-385x318_27: -9218832366993498149
+      sprite-sheet-385x318_24: -3583114017569730515
+      sprite-sheet-385x318_29: -5151842803217024860
+      sprite-sheet-385x318_26: -7256972940463485631
+      sprite-sheet-385x318_0: 865930008132992134
+      sprite-sheet-385x318_14: 1389283689156414990
+      sprite-sheet-385x318_4: -913677739905539363
+      sprite-sheet-385x318_23: 5749826869683430366
+      sprite-sheet-385x318_34: -6400483696480131071
+      sprite-sheet-385x318_33: 8459200610959441607
+      sprite-sheet-385x318_28: 4570172603225133367
+      sprite-sheet-385x318_13: -6797964509511542214
+      sprite-sheet-385x318_22: -5228792980145002724
+      sprite-sheet-385x318_7: -1140884382446189789
+      sprite-sheet-385x318_1: 1777543380982562267
+      sprite-sheet-385x318_3: 7024242493196795902
+      sprite-sheet-385x318_9: 4372984771510128691
+      sprite-sheet-385x318_18: 8911785119988162338
+      sprite-sheet-385x318_20: 8433827257026014750
+      sprite-sheet-385x318_12: 6906933714854803677
+      sprite-sheet-385x318_11: 1091232798034065367
+      sprite-sheet-385x318_15: 5568294373641342783
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

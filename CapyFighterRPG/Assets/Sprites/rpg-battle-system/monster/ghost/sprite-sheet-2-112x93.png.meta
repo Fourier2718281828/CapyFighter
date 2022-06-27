@@ -114,6 +114,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -832,6 +833,37 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      sprite-sheet-2-112x93_13: -9183756544940558630
+      sprite-sheet-2-112x93_23: 7966570319780809074
+      sprite-sheet-2-112x93_29: 1027059330539937950
+      sprite-sheet-2-112x93_25: -6835700185990703319
+      sprite-sheet-2-112x93_9: 8068290226784516361
+      sprite-sheet-2-112x93_21: 344902994500339298
+      sprite-sheet-2-112x93_24: 8879076109526600757
+      sprite-sheet-2-112x93_16: -2753483536666533341
+      sprite-sheet-2-112x93_28: 7868250631633833360
+      sprite-sheet-2-112x93_19: 5996878169008423419
+      sprite-sheet-2-112x93_15: -7704427407740090313
+      sprite-sheet-2-112x93_0: -750389620222819819
+      sprite-sheet-2-112x93_20: -2677551931506028405
+      sprite-sheet-2-112x93_22: 4849243532268051862
+      sprite-sheet-2-112x93_14: -3825922109143100351
+      sprite-sheet-2-112x93_17: -5959988354879930267
+      sprite-sheet-2-112x93_27: 6502796530626218333
+      sprite-sheet-2-112x93_18: 41397289889738769
+      sprite-sheet-2-112x93_3: 8993578404843022099
+      sprite-sheet-2-112x93_4: -4395451989873526684
+      sprite-sheet-2-112x93_26: -2616937423582147959
+      sprite-sheet-2-112x93_1: 6647562793628049697
+      sprite-sheet-2-112x93_8: 747511643097153078
+      sprite-sheet-2-112x93_6: 3518346155782447788
+      sprite-sheet-2-112x93_5: 1402614434747724576
+      sprite-sheet-2-112x93_2: -8886694237137684671
+      sprite-sheet-2-112x93_10: 5717980898734715923
+      sprite-sheet-2-112x93_11: -3683881416209550947
+      sprite-sheet-2-112x93_7: 7261254215701675857
+      sprite-sheet-2-112x93_12: -3774115426743590976
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -32,7 +32,6 @@ public class Unit : MonoBehaviour
 
         _fighter.OnSuperAttacked += _ =>
         {
-            Debug.Log("HereFuck");
             _animator.Play("SuperAttack");
             _audioSource.clip = _data.SuperAttackSound;
             _audioSource.Play();

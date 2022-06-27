@@ -42,6 +42,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -235,6 +236,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      capyTakenHit_3: 6680155279018742889
+      capyTakenHit_0: -7751264442590391493
+      capyTakenHit_2: -6391852664999852735
+      capyTakenHit_1: -7059922931753765198
+      capyTakenHit_4: -8347505862408557052
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

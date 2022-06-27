@@ -42,6 +42,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -235,6 +236,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      takenHitEnemy_4: -4431730817241843050
+      takenHitEnemy_1: -2853137778156073521
+      takenHitEnemy_2: 2200765860807138446
+      takenHitEnemy_0: 3743685237786632119
+      takenHitEnemy_3: 8208351021619431089
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
