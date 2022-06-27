@@ -4,6 +4,7 @@
 public class Achievement
 {
     private AchievementType _type;
+    private string _name;
 
     private int _firstStarPoints;
     private int _secondStarPoints;
@@ -20,6 +21,7 @@ public class Achievement
     public Achievement(AchievementData data, GameStats stats)
     {
         _type = data.Type;
+        _name = data.Name;
 
         _firstStarPoints = data.FirstStarPoints;
         _secondStarPoints = data.SecondStarPoints;
@@ -60,4 +62,17 @@ public class Achievement
                 throw new InvalidOperationException("No such Achievement type");
         }
     }
+
+
+    public AchievementType Type => _type;
+    public string Name => _name;
+    public int FirstStarPoints =>_firstStarPoints;
+    public int SecondStarPoints => _secondStarPoints;
+    public int ThirdStarPoints => _thirdStarPoints;
+
+    public string FirstStarDescription => _firstStarDescription;
+    public string SecondStarDescription => _secondStarDescription;
+    public string ThirdStarDescription => _thirdStarDescription;
+
+    public int Progress => _progress;
 }

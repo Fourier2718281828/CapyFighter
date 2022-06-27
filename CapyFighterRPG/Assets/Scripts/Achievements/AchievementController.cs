@@ -4,10 +4,9 @@ using UnityEngine.UI;
 public class AchievementController : MonoBehaviour
 {
     [Header("User data :")]
-    [SerializeField] private AchievementData _achievementData;
+    [SerializeField] private Achievement _achievement;
 
     [Header("Prefab data :")]
-    [SerializeField] private GameObject _icon;
     [SerializeField] private GameObject _name;
     [SerializeField] private GameObject _description;
     [SerializeField] private GameObject _firstStar;
@@ -17,7 +16,6 @@ public class AchievementController : MonoBehaviour
     [SerializeField] private Sprite     _starSprite;
 
 
-    private Image   _iconImage;
     private Text    _nameText;
     private Text    _descriptionText;
     private Image   _firstStarImage;
@@ -27,7 +25,6 @@ public class AchievementController : MonoBehaviour
 
     private void Awake()
     {
-        _iconImage = _icon.GetComponent<Image>();
         _nameText = _name.GetComponent<Text>();
         _descriptionText = _description.GetComponent<Text>();
         _firstStarImage = _firstStar.GetComponent<Image>();
@@ -35,30 +32,21 @@ public class AchievementController : MonoBehaviour
         _thirdStarImage = _thirdStar.GetComponent<Image>();
     }
 
-    public void Init(AchievementData data)
+    public void Init(Achievement data)
     {
-        _achievementData = data;
+        _achievement = data;
         AttachAllUIElements();
     }
 
     private void AttachAllUIElements()
     {
-        _iconImage.sprite = _achievementData.IconImage;
-        _nameText.text = _achievementData.Name;
-        _descriptionText.text = _achievementData.FirstStarDescription;
+        _nameText.text = _achievement.Name;
+        _descriptionText.text = _achievement.FirstStarDescription;
 
-        SetFirstStarImageFulfilled(true);
-        SetSecondStarImageFulfilled(true);
-        SetThirdStarImageFulfilled(true);
-
-
-        //AttachAllStarUIDependings();
+        SetFirstStarImageFulfilled(_achievement.IsFirstStarFulfilled());   
+        SetSecondStarImageFulfilled(_achievement.IsSecondStarFulfilled());
+        SetThirdStarImageFulfilled(_achievement.IsThirdStarFulfilled());
     }
-
-    //private void AttachAllStarUIDependings()
-    //{
-
-    //}
 
     private void SetFirstStarImageFulfilled(bool active)
     {
