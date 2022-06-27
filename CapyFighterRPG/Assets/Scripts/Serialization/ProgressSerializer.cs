@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
 public class ProgressSerializer : MonoBehaviour
 {
@@ -7,7 +9,15 @@ public class ProgressSerializer : MonoBehaviour
     private void Awake()
     {
         _currentProgress = GetComponent<GameProgress>();
-        LoadProgress();
+
+        try
+        {
+            LoadProgress();
+        }
+        catch (InvalidOperationException)
+        {
+            SerializeAndLoadNewGameProgress();
+        }
     }
 
     public void SaveProgress()
@@ -19,11 +29,20 @@ public class ProgressSerializer : MonoBehaviour
     {
         GameProgressSave save = Serializer.Deserialize();
         if (save == null)
+            throw new InvalidOperationException("There are no files to load from.");
+        _currentProgress.Init(save);
+    }
+
+    //TODO make to do this when "new game" button is hit!!!
+    private void SerializeAndLoadNewGameProgress()
+    {
+        var achievements = GetComponent<AchievementDataList>().Achievements;
+        var listOfAchievements = new List<Achievement>();
+        foreach (var data in achievements)
         {
-            //TODO make to do this when "new game" button is hit!!!
-            _currentProgress.Init(new GameProgressSave());
+            listOfAchievements.Add(new Achievement(data, null));
         }
-        else
-            _currentProgress.Init(save);
+        _currentProgress.Init(new GameProgressSave(listOfAchievements));
+        SaveProgress();
     }
 }
