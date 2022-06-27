@@ -41,4 +41,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level3.unity
     guid: bc25c90e50d8fd34188efaacaaf465cd
+  - enabled: 1
+    path: Assets/Scenes/CharacteristicsDark.unity
+    guid: 1d397f1b5d50c7a41be5ae7c6c94c127
+  - enabled: 1
+    path: Assets/Scenes/Characteristics.unity
+    guid: 2f22e00287afca34f8810123814b0287
   m_configObjects: {}
