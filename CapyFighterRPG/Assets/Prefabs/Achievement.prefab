@@ -79,7 +79,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Fuck my ass na pogotovi and some interesting facts about pure capibaras
+  m_Text: Empty
 --- !u!1 &697957721321003011
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Pacifist
+  m_Text: Empty
 --- !u!1 &2828536438591121770
 GameObject:
   m_ObjectHideFlags: 0
