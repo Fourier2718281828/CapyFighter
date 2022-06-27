@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 30.67865, y: -22.28}
-  m_SizeDelta: {x: -228.85999, y: 44.56}
+  m_AnchoredPosition: {x: 30.67865, y: -24.7485}
+  m_SizeDelta: {x: -228.86, y: 49.4971}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5776565151347755077
 CanvasRenderer:
@@ -68,7 +68,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 19b89a8bffbac5042b7dc64f270c563d, type: 3}
-    m_FontSize: 20
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -191,8 +191,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 331.1416, y: 31.299}
-  m_SizeDelta: {x: 372.0659, y: 62.598}
+  m_AnchoredPosition: {x: 434.8203, y: 31.299}
+  m_SizeDelta: {x: 579.4232, y: 62.598}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5962408652777503858
 CanvasRenderer:
@@ -343,7 +343,7 @@ RectTransform:
   m_GameObject: {fileID: 6410187165126218018}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 92.537476}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: 0.55, y: 0.55, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2637003270301051963}
@@ -432,8 +432,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192630bca20fdc74ab77cd9b2fa0d299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _achievementData: {fileID: 11400000, guid: fbc548cd559d6ae46ba64fa28a78eeee, type: 2}
-  _icon: {fileID: 7560485106639442560}
   _name: {fileID: 1823801320739866948}
   _description: {fileID: 372537156801400207}
   _firstStar: {fileID: 697957721321003011}

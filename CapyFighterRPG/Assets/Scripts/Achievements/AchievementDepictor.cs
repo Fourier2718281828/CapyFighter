@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class AchievementDepictor : MonoBehaviour
@@ -9,14 +9,59 @@ public class AchievementDepictor : MonoBehaviour
     private RectTransform _canvasTransform;
     private const int _NumOfRowsAtPage = 3;
     private Vector3[] _positions;
+    private List<Achievement> _achievements;
+    private List<GameObject> _depictedAchievements;
+    private int _numberOfPages;
+    private int _currentPage;
 
     private void Awake()
     {
         _canvasTransform = GetComponent<RectTransform>();
         _positions = new Vector3[_NumOfRowsAtPage];
+        _currentPage = -1;
+        _depictedAchievements = new List<GameObject>();
         EvaluatePositions();
-        SpawnAchievements();
+        LoadAchievements();
+        SetNumberOfPages();
+        NextPage();
     }
+
+    private void OnEnable()
+    {
+        AssignPredicateBlocksToButtons();
+    }
+
+    public void NextPage()
+    {
+        if(HasNextPage())
+        {
+            ++_currentPage;
+            DestroyAllDepictedAchievements();
+            SpawnAchievementsAtCurrentPage();
+        }
+        else
+        {
+            throw new InvalidOperationException("No next page present");
+        }
+    }
+
+    public void PreviousPage()
+    {
+        if (HasPreviousPage())
+        {
+            --_currentPage;
+            DestroyAllDepictedAchievements();
+            SpawnAchievementsAtCurrentPage();
+        }
+        else
+        {
+            throw new InvalidOperationException("No next page present");
+        }
+    }
+
+    public bool HasNextPage() => _currentPage + 1 < _numberOfPages;
+
+    public bool HasPreviousPage() => _currentPage - 1 >= 0;
 
     private void EvaluatePositions()
     {
@@ -31,13 +76,51 @@ public class AchievementDepictor : MonoBehaviour
         }
     }
 
-    private void SpawnAchievements()
+    private void SpawnAchievementsAtCurrentPage()
     {
-        foreach(var position in _positions)
+        int startingIndex = _currentPage * _NumOfRowsAtPage;
+        Debug.Assert(_depictedAchievements.Count == 0);
+        for (int i = 0; i < _NumOfRowsAtPage; ++i)
         {
+            if (startingIndex + i >= _achievements.Count)
+                break;
+
             GameObject ach = Instantiate(_achievementPrefab, _canvasTransform);
             var transform = (ach.transform) as RectTransform;
-            transform.anchoredPosition = position;
+            transform.anchoredPosition = _positions[i];
+            _depictedAchievements.Add(ach);
+
+            ach.GetComponent<AchievementController>().Init(_achievements[startingIndex + i]);
         }
+    }
+
+    private void DestroyAllDepictedAchievements()
+    {
+        foreach(var ach in _depictedAchievements)
+        {
+            Destroy(ach);
+        }
+
+        _depictedAchievements.Clear();
+    }
+
+    private void LoadAchievements()
+    {
+        GameProgressSave save = Serializer.Deserialize();
+        if (save == null)
+            throw new InvalidOperationException("There are no files to load from.");
+        _achievements = save.Achievements;
+    }
+
+    private void SetNumberOfPages() 
+        => _numberOfPages = Mathf.CeilToInt((float)_achievements.Count / _NumOfRowsAtPage);
+
+    private void AssignPredicateBlocksToButtons()
+    {
+        var leftButton = GameObject.FindGameObjectWithTag("LeftArrow");
+        leftButton.GetComponent<DynamicButtonBlocker>().CanInteract = _ => HasPreviousPage();
+
+        var rightButton = GameObject.FindGameObjectWithTag("RightArrow");
+        rightButton.GetComponent<DynamicButtonBlocker>().CanInteract = _ => HasNextPage();
     }
 }

@@ -316,6 +316,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272168449}
   m_CullTransparentMesh: 1
+--- !u!1 &298354832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 298354834}
+  - component: {fileID: 298354833}
+  m_Layer: 0
+  m_Name: GameStarter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &298354833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298354832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8262a73ca81515043a66e67ab6e994b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _achievementDatas:
+  - {fileID: 11400000, guid: fbc548cd559d6ae46ba64fa28a78eeee, type: 2}
+  - {fileID: 11400000, guid: 3e0b608c6fa908e4ba102cdbe49e3082, type: 2}
+  - {fileID: 11400000, guid: 5cfe9348b43252f42b66d8cf694a8190, type: 2}
+  - {fileID: 11400000, guid: a97f01ae61d42c64d8733b9aadd61d5a, type: 2}
+--- !u!4 &298354834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298354832}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.1491795, y: -0.79127634, z: 76.05176}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &491126877
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,6 +501,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Levels
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 298354833}
+        m_TargetAssemblyTypeName: GameStarter, Assembly-CSharp
+        m_MethodName: SerializeNewGameProgress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &491126882
@@ -820,6 +881,7 @@ GameObject:
   - component: {fileID: 1254203261}
   - component: {fileID: 1254203260}
   - component: {fileID: 1254203259}
+  - component: {fileID: 1254203263}
   m_Layer: 5
   m_Name: Achievements
   m_TagString: Untagged
@@ -957,6 +1019,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254203257}
   m_CullTransparentMesh: 1
+--- !u!114 &1254203263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254203257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e298afce0f6dff748bfa7ae83e2790c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1408388303
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,7 +1068,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -140.21002}
+  m_AnchoredPosition: {x: 0, y: -140.21}
   m_SizeDelta: {x: -1262, y: -716.42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1408388305
@@ -1146,7 +1220,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -255}
+  m_AnchoredPosition: {x: 0, y: -254.99998}
   m_SizeDelta: {x: -1262, y: -723.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1592869868

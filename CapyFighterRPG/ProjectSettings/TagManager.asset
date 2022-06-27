@@ -7,6 +7,8 @@ TagManager:
   - CombatController
   - GameMusic
   - Unit
+  - RightArrow
+  - LeftArrow
   layers:
   - Default
   - TransparentFX
